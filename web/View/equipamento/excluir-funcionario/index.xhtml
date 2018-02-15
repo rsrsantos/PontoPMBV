@@ -1,0 +1,92 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="corpo">   
+
+        <h:form>
+            <p:growl autoUpdate="true" />
+            <p:tabView>
+                <p:tab title="Excluir Funcionário Rep" id="tab02">
+                    <p:panel >
+
+                        <p:separator/>
+                        <p:dataTable id="tab2" var="ptoequipamento" value="#{ptoEquipamentoBeanHenry.ptoEquipamentos}"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                     currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
+                                     - Página: {currentPage}/{totalPages} ]"
+                                     paginator="true" rows="5" style="margin-bottom:20px">
+
+                            <f:facet name="header">
+                                Equipamentos 
+                            </f:facet>
+
+                            <p:column style="width:16px">
+                                <p:rowToggler />
+                            </p:column>
+
+                            <p:rowExpansion>
+                                <!--<p:panelGrid  columns="4" columnClasses="label,value" style="width:300px">-->
+                                <p:dataTable id="tb2" var="funcionarios" value="#{funcionarioBean.funcionarios}" 
+
+                                             paginator="true" rows="5" style="margin-bottom:20px">
+
+                                    <p:column headerText="Nome" filterBy="#{funcionarios.nome}" filterMatchMode="contains" >
+                                        <h:outputText id="nome" value="#{funcionarios.nome}"  />
+                                    </p:column>
+                                    <p:column headerText="Matricula" filterBy="#{funcionarios.matricula}" filterMatchMode="contains">
+                                        <h:outputText id="matricula" value="#{funcionarios.matricula}"  />
+                                    </p:column>
+                                    <p:column headerText="PIS" filterBy="#{funcionarios.pis}" filterMatchMode="contains">
+                                        <h:outputText id="pis" value="#{funcionarios.pis}"  />
+                                    </p:column>
+                                    <p:column headerText="Excluir" style="width:40px" >
+                                        <p:commandLink  ajax="false" value="Excluir" action="#{funcionarioBean.conectarFuncionarioExcluir(ptoequipamento, funcionarios)}">
+                                            <p:confirm header="Confirmação" message="Tem Certeza?" icon="ui-icon-alert" />
+                                        </p:commandLink>
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                        </p:confirmDialog>
+                                    </p:column>
+
+
+                                </p:dataTable>
+                                <!--</p:panelGrid>-->
+                            </p:rowExpansion>
+
+                            <p:column headerText="Equipamento" filterBy="#{ptoequipamento.descricao}" sortBy="#{ptoequipamento.descricao}" filterMatchMode="contains">
+                                <h:outputText id="equipamento" value="#{ptoequipamento.descricao}"  />
+                            </p:column>
+
+                            <p:column headerText="IP" filterBy="#{ptoequipamento.ip}" sortBy="#{ptoequipamento.ip}" filterMatchMode="contains">
+                                <h:outputText  id="ip" value="#{ptoequipamento.ip}" />
+                            </p:column>
+
+                            <p:column headerText="Modelo" filterBy="#{ptoequipamento.modelo}" sortBy="#{ptoequipamento.modelo}" filterMatchMode="contains">
+                                <p:outputLabel  id="modelo" value="#{ptoequipamento.modelo}" />
+                            </p:column>
+
+                            <p:column id="result2" headerText="Nsr" filterBy="#{ptoequipamento.ultimonsr}" sortBy="#{ptoequipamento.ultimonsr}" filterMatchMode="contains"> 
+                                <p:outputLabel  id="ultimonsr" value="#{ptoequipamento.ultimonsr} "  />
+                            </p:column>
+
+                        </p:dataTable >
+
+
+                    </p:panel>
+                </p:tab>
+
+            </p:tabView>
+
+        </h:form>               
+
+
+    </ui:define>
+
+
+
+</ui:composition>

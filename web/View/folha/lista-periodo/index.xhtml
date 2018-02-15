@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <h:form id="form" >
+            <p:growl id="messages" autoUpdate="true" />
+            <p:tabView>
+                <p:tab title="FOLHAS">
+                    <p:commandButton value="Novo" action="#{folhaPeriodoBean.novoPeriodo()}" icon="ui-icon-circle-plus" ajax="false" />
+                    <br></br> <br></br>
+
+                    <h:panelGrid columns="4" cellpadding="10" >
+                        <div class="ui-g-12">
+                            <div class="card card-w-title">
+                                <p:dataTable id="tbl" var="periodo"  value="#{folhaPeriodoBean.folhaPeriodos}" reflow="true"
+                                             paginator="true" rows="10" style="margin-bottom:20px">
+                                    <f:facet name="header">
+                                        PERIODO FOLHA
+                                    </f:facet>
+                                    <p:column headerText="Periodo" >
+                                        <h:outputText id="periodo" value="#{periodo.periodo}" />
+                                    </p:column>
+
+                                    <p:column headerText="Usuario Alteração" >
+                                        <h:outputText id="usuario-acao" value="#{periodo.usuario.funcionario.nome}" />
+                                    </p:column>
+
+                                    <p:column headerText="Ação"  style="width:350px"  >
+                                        <p:commandButton  ajax="false" icon="fa fw fa-edit" action="#{folhaPeriodoBean.editar(periodo)}"/>
+
+                                        <p:commandButton ajax="false" icon="fa fw fa-trash-o" action="#{folhaPeriodoBean.excluir(periodo)}" />
+                                        <p:commandButton update="form:messages"  value="Abrir Folha" action="#{folhaPeriodoBean.abrirFolha(periodo)}" />
+                                        <p:commandButton update="form:messages"  value="Fechar Folha" action="#{folhaPeriodoBean.fecharFolha(periodo)}"/>
+                                        <p:commandButton update="form:messages"  value="Reabrir Folha" action="#{folhaPeriodoBean.reabrirFolha(periodo)}"/>
+
+                                        <br/>
+
+
+
+                                    </p:column>
+                                </p:dataTable>
+
+                            </div>
+                        </div>
+
+                    </h:panelGrid>  
+
+                </p:tab>
+
+            </p:tabView>	
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
+

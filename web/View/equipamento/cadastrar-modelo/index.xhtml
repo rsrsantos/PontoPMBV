@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <title>Novo Modelo</title>  
+        <h:form>
+            <p:growl autoUpdate="true" />
+            <h2>Modelos</h2>
+            <p:tabView>
+                <p:tab title="Dados Genéricos">
+                    <div class="card card-w-title">
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank form-group" >
+
+                            <p:outputLabel value="Código:"/>
+                            <p:inputText  id="id"  size="15" value="#{modeloBean.modelo.id}" />
+
+                            <p:outputLabel value="Descrição:"/>
+                            <p:inputText id="descricao" required="true" requiredMessage="Preencha a Descrição"  size="55" value="#{modeloBean.modelo.descricao}" />
+
+                            <p:outputLabel value="Modelo:"/>
+                            <p:inputText id="modelo" required="true" requiredMessage="Preencha o Modelo"  size="55" value="#{modeloBean.modelo.modelo}" />
+
+
+
+                        </p:panelGrid>   
+                    </div>
+                    <br></br> <br></br>
+
+
+
+                </p:tab>
+
+            </p:tabView>
+            <h:panelGrid width="100%" style="text-align:center">
+                <p:commandButton   value="Salvar" style="height: 40px; width: 1300px;align-content: center;" icon="fa fa-fw fa-save" action="#{modeloBean.gravarModelo()}"  ajax="false"/>
+            </h:panelGrid>
+
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

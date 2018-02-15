@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="corpo">              
+        <title>Funcionários</title>
+
+        <h:form id="form">
+            <p:growl autoUpdate="true" />
+
+            <p:tabView>
+                <p:tab title="Escalas" >
+                    <p:commandButton value="Novo" action="#{escalaBean.novaEscala()}" icon="ui-icon-circle-plus" ajax="false" />
+                    <br></br> <br></br>
+
+                    <p:panel id="listafuncionarios">
+                        <h:panelGrid columns="4" cellpadding="10">
+                            <div class="ui-g-12">
+                                <div class="card card-w-title">
+                                    <p:dataTable id="tblFuncionarios" var="escala" value="#{escalaBean.listEscala}" reflow="true" 
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                                                 currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
+                                                 - Página: {currentPage}/{totalPages} ]" emptyMessage="Nenhum registro encontrado"
+                                                 paginator="true" rows="10" style="margin-bottom:20px">
+
+
+
+
+                                        <p:column headerText="Ação"  style="width:80px">
+                                            <p:commandButton icon="fa fw fa-edit" ajax="false" action="#{escalaBean.editar(escala)}"/>
+
+                                            <p:commandButton icon="fa fw fa-trash-o" update="form" actionListener="#{escalaBean.excluir(escala)}">
+                                                <p:confirm header="Confirmation" message="Tem Certeza?" icon="ui-icon-alert" />
+                                            </p:commandButton>
+
+                                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                            </p:confirmDialog>
+                                        </p:column>
+
+
+
+                                    </p:dataTable >
+
+                                </div>
+                            </div>
+
+
+                        </h:panelGrid > 
+
+                    </p:panel>
+
+
+                </p:tab>
+
+
+            </p:tabView>
+
+
+
+        </h:form>               
+
+
+
+    </ui:define>
+
+
+
+</ui:composition>

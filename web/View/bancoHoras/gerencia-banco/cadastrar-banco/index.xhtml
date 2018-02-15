@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                >
+
+    <ui:define name="corpo"> 
+        <title>Cadastrar Banco Hora</title>  
+        <p:growl autoUpdate="true" id="valida"/>
+        <ui:include src="/View/js/calendar-pt.xhtml" />
+        <h:form>
+            <h2>Banco Horas</h2>
+            <p:tabView>
+                <p:tab title="Banco Horas"  >
+                    <div class="card card-w-title">
+                        <p:panelGrid id="painelbancoHoras" columns="4" styleClass="ui-panelgrid-blank form-group" >
+
+                            <p:outputLabel for="id" value="ID"/>
+                            <p:inputText  id="id" value="#{bancoHorasBean.bancohoras.id}"  />
+
+                            <p:outputLabel for="descricao" value="Descrição"/>
+                            <p:inputText required="true" requiredMessage="Preencha o Nome" id="descricao" value="#{bancoHorasBean.bancohoras.descricao}" size="55"  />
+
+                            <p:outputLabel for="credito" value="Limite Crédito Diário"/>
+                            <p:inputText required="true" requiredMessage="Limite Crédito" id="credito" value="#{bancoHorasBean.bancohoras.limite_credito_diario}" size="20" />
+
+                            <p:outputLabel for="debito" value="Limite Débito Diário"/>
+                            <p:inputText required="true" requiredMessage="Limite Débito " id="debito" value="#{bancoHorasBean.bancohoras.limite_debito_diario}" size="20" />
+
+                            <p:outputLabel value="Data Inicio: " />
+                            <p:calendar required="true" requiredMessage="Inicio" value="#{bancoHorasBean.bancohoras.data_criacao}" />
+
+                            <p:outputLabel value="Data Expiração" />
+                            <p:calendar required="true" requiredMessage="Fim" value="#{bancoHorasBean.bancohoras.data_expiracao}" />
+
+
+                        </p:panelGrid>   
+                    </div>
+
+                </p:tab>
+
+
+            </p:tabView>
+            <br/>
+            <p:panel>
+                <p:outputLabel id="outLabelSetor" for="iptSlctMenuSetor" value="Departamento">
+                    <br />
+                    <p:selectCheckboxMenu label="departamento" required="true"  requiredMessage="Departamento" 
+                                          filter="true" filterMatchMode="contains" id="iptSlctMenuSetor" converter="entityConverter" style="width:300px"
+                                          value="#{bancoHorasBean.bancohoras.departamento}">
+                        <f:selectItems value="#{bancoHorasBean.departamentos}" var="item" 
+                                       itemLabel="#{item.descricao}" itemValue="#{item}"/>
+                    </p:selectCheckboxMenu>
+                </p:outputLabel>
+            </p:panel>
+            <br></br    >
+            <h:panelGrid width="100%" style="text-align:left">
+                <p:commandButton   value="Salvar" style="height: 40px; width: 1300px;align-content:center;" icon="fa fa-fw fa-save" action="#{bancoHorasBean.gravarBanco()}"  ajax="false"/>
+            </h:panelGrid>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

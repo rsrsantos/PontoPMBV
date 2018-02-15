@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <title>Cadastrar Empresa</title>  
+        <h:form>
+            <p:growl autoUpdate="true" id="empresa"/>
+            <h2>Empresa</h2>
+            <p:tabView>
+                <p:tab title="Dados  Genéricos">
+                    <div class="card card-w-title">
+                        <p:panelGrid id="painelEmpresa" columns="4" styleClass="ui-panelgrid-blank form-group"  >
+
+                            <p:outputLabel for="id" value="Id:"/>
+                            <p:inputText  id="id" value="#{empresaBean.empresa.id}" size="10"  />
+
+                            <p:outputLabel for="empresa" value="Empresa:"/>
+                            <p:inputText required="true" requiredMessage="Preencha o Nome" id="empresa" value="#{empresaBean.empresa.empresa}" size="55"  />
+
+                            <p:outputLabel for="cnpj" value="CNPJ:"/>
+                            <p:inputMask mask="99.999.999/9999-99" required="true"  requiredMessage="CNPJ" id="cnpj" value="#{empresaBean.empresa.cnpj}" size="20" >
+                                <p:ajax update="empresa" listener="#{empresaBean.isValidCNPJ(cnpj)}"/>
+                            </p:inputMask>
+
+                            <p:outputLabel for="inscricao" value="Inscrição"/>
+                            <p:inputText  id="inscricao" value="#{empresaBean.empresa.inscricao}" size="20"  />
+
+                        </p:panelGrid>   
+                    </div>
+
+                </p:tab>
+
+            </p:tabView>
+            <br></br>
+            <p:tabView>
+                <p:tab title="Dados Complementares">
+                    <div class="card card-w-title">
+                        <p:panelGrid columns="4" styleClass="ui-panelgrid-blank form-group" >
+
+                            <p:outputLabel for="endereco" value="Endereço"/>
+                            <p:inputText required="true" requiredMessage="Preencha o Email" id="endereco" value="#{empresaBean.empresa.endereco}" size="55" />
+
+                            <p:outputLabel for="bairro" value="Bairro"/>
+                            <p:inputText required="true" requiredMessage="Preencha a Senha" id="bairro" value="#{empresaBean.empresa.bairro}" size="55"  />
+
+                            <p:outputLabel for="cidade" value="Cidade"/>
+                            <p:inputText required="true" requiredMessage="Preencha o Departamento" id="cidade" value="#{empresaBean.empresa.cidade}" size="35"  />
+
+                            <p:outputLabel for="estado" value="Estado"/>
+                            <p:inputMask mask="RR " required="true" requiredMessage="Preencha o Estado" id="estado" value="#{empresaBean.empresa.estado}" size="10"  />
+
+                            <p:outputLabel for="cep"  value="CEP:"/>
+                            <p:inputMask mask="99999-999" required="true" requiredMessage="CEP" id="cep" value="#{empresaBean.empresa.cep}" size="20"  />
+
+
+                        </p:panelGrid>   
+                    </div>
+
+                </p:tab>
+
+            </p:tabView>
+            <br></br>
+            <h:panelGrid  style="text-align:left">
+                <p:commandButton   value="Salvar" style="height: 40px; width: 1300px;align-content: center;" icon="fa fa-fw fa-save" action="#{empresaBean.gravarEmpresa()}"  ajax="false"/>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

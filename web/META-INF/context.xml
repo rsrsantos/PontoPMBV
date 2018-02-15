@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/APIPrisma_8">
+
+
+    <Realm className="org.apache.catalina.realm.JDBCRealm" 
+           driverName="org.postgresql.Driver" connectionURL="jdbc:postgresql://localhost:5432/Crude" 
+           connectionName="postgres" connectionPassword="root" userTable="usuario" userNameCol="login" userCredCol="senha" 
+           userRoleTable="usuario_funcao" roleNameCol="funcao"/>
+
+
+</Context>
+
+    

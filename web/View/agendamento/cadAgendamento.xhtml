@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <title>Novo Agendamento</title>  
+        <h:form>
+            <p:growl autoUpdate="true" />
+            <h2>Agendamento</h2>
+            <p:tabView>
+                <p:tab title="Dados Genéricos">
+                    <p:separator />
+                    <h:panelGrid columns="4" cellpadding="10">
+
+                        <p:outputLabel value="Código:"/>
+                        <p:inputText  id="id"  size="15" value="#{tarefaAgendadaBean.agendamento.id}" />
+
+                        <p:outputLabel value="Descrição:"/>
+                        <p:inputText id="descricao" required="true" requiredMessage="Preencha a Descrição"  size="55" value="#{tarefaAgendadaBean.agendamento.descricao}" />
+
+                    </h:panelGrid>   
+                    <p:separator/>
+
+
+
+                </p:tab>
+
+            </p:tabView>
+
+            <p:tabView>
+                <p:tab title="Dados Complementares">
+                    <p:separator />
+                    <h:panelGrid columns="4" cellpadding="10" >
+
+                        <p:outputLabel value="Intervalo:"/>
+                        <p:inputText id="diasemana" required="true" requiredMessage="Preencha o Dia"  value="#{tarefaAgendadaBean.agendamento.intervalo}"  size="25" />
+
+                        <p:outputLabel value="Hora"/>
+                        <p:inputText  required="true" requiredMessage="Preencha a Hora"    value="#{tarefaAgendadaBean.agendamento.hora}"  size="25"/> 
+
+
+
+                    </h:panelGrid>  
+                    <p:separator/><br/>
+                    <h:panelGrid width="100%" style="text-align:center">
+                        <p:commandButton   value="Salvar" style="height: 40px; width: 1300px;align-content: center;" icon="fa fa-fw fa-save" action="#{ tarefaAgendadaBean.gravarAgendamento()}"    ajax="false"/>
+                    </h:panelGrid>
+
+                </p:tab>
+
+            </p:tabView>
+
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

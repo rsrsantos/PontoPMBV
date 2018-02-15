@@ -1,0 +1,82 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <title>Cadastrar Justificativa</title>  
+        <p:growl autoUpdate="true" id="cadastrar" />
+        <h:form >
+            <h2>Justificativa</h2>
+
+            <p:tabView >
+
+                <p:tab title="Dados Genéricos"  >
+
+                    <p:panelGrid id="painelJustificativa" columns="1" styleClass="ui-panelgrid-blank form-group" >
+
+                        <p:outputLabel value="ID">
+                            <br/>
+                            <p:inputText  id="id" value="#{justificativaBean.justificativa.id}"  />
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Descrição:">
+                            <br/>
+                            <p:inputText maxlength="7" required="true" requiredMessage="Preencha a Descrição" id="descricao" 
+                                         value="#{justificativaBean.justificativa.descricao}" size="55"  />
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Nome:  ">
+                            <br/>
+                            <p:inputText required="true" requiredMessage="Preencha o Nome" id="nome" 
+                                         value="#{justificativaBean.justificativa.nome}" size="55"  />
+                        </p:outputLabel>
+
+                    </p:panelGrid>  
+
+                </p:tab>
+
+
+            </p:tabView>
+            <br/>
+            <p:tabView >
+
+                <p:tab title="Outras Opções"  >
+
+                    <p:panelGrid id="painelJustificativa" columns="1" styleClass="ui-panelgrid-blank form-group" >
+
+
+                    </p:panelGrid>  
+
+                    <p:outputLabel value="Valor Dia">
+                        <br/>
+                        <p:inputMask mask="99:99" value="#{justificativaBean.justificativa.valorDia}" />
+                    </p:outputLabel>
+                    <BR/> <BR/>
+                    <h:outputText value="Ajuste " />
+                    <p:selectBooleanCheckbox  value="#{justificativaBean.justificativa.ajuste}" >
+                    </p:selectBooleanCheckbox>
+                    <p:spacer width="55" height="10"/>
+                    <h:outputText value="Descontar Banco Horas : " />
+                    <p:selectBooleanCheckbox value="#{justificativaBean.justificativa.banco}" />
+                    <p:spacer width="55" height="10"/>
+                    <h:outputText value="Lançar Falta : " />
+                    <p:selectBooleanCheckbox value="#{justificativaBean.justificativa.falta}" />
+
+                </p:tab>
+
+
+            </p:tabView>
+            <br></br>
+            <h:panelGrid width="100%" style="text-align:center">
+                <p:commandButton   value="Salvar" style="height: 40px; width: 1300px;align-content: center;" icon="fa fa-fw fa-save" action="#{justificativaBean.gravarJustificativa()}"    ajax="false"/>
+            </h:panelGrid>
+
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

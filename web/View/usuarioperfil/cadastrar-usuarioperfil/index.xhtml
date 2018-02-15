@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                >
+
+    <ui:define name="corpo"> 
+        <title>Cadastrar Perfil Usuario</title>  
+        <p:growl autoUpdate="true" id="valida"/>
+        <h:form>
+            <h2>Usuario</h2>
+            <p:tabView>
+
+                <p:tab title="Cadastrar Perfil Usuario">
+
+                    <p:panelGrid id="painelUsuario" columns="4" styleClass="ui-panelgrid-blank form-group"  >
+
+                        <p:outputLabel value="ID:"/>
+                        <p:inputText id="id" value="#{usuarioPerfilBean.usuarioperfil.id}" size="10" />
+
+
+
+                        <p:outputLabel for="descricao" value="Descrição"/>
+                        <p:inputText required="true" requiredMessage="Preencha o Perfil"  id="descricao" 
+                                     value="#{usuarioPerfilBean.usuarioperfil.descricao}" size="55" 
+                                     >
+                        </p:inputText>
+
+                    </p:panelGrid>  
+
+                </p:tab>
+
+            </p:tabView>
+            <br></br>
+            <h:panelGrid width="100%" style="text-align:left">
+                <p:commandButton   value="Salvar" style="height: 40px; width: 1550px;align-content: center;" icon="fa fa-fw fa-save" action="#{usuarioPerfilBean.gravar()}"   ajax="false"/>
+            </h:panelGrid>
+
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

@@ -1,0 +1,36 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pv="http://primefaces.org/verona">
+
+    <div class="layout-menu-wrapper">
+        <div class="nano">
+            <div class="nano-content sidebar-scroll-content">
+                <div class="layout-menu-container">
+                    <h:form id="menuform">
+                        <pv:menu>
+                            <p:menuitem id="home" value="HOME" icon="fa fa-home" outcome="/View/HomeGestor/index"/>
+                            <p:submenu label="MOVIMENTAÇÕES" icon=" fa fa-exchange"  >
+                                <p:menuitem value="Afastamentos " icon="icon-user"   url="/View/afastamento/lista-afastamento/" />
+                                <p:menuitem value="Banco Horas Extrato " icon="icon-user" url="/View/bancoHoras/extrato-banco/index.xhtml"    />
+                                <p:menuitem value="Espelho Ponto " icon="icon-user"  url="/View/espelhoPonto/espelhoPonto.xhtml"  />
+                            </p:submenu>
+                            <p:submenu label="RELATÓRIOS" icon="fa fa-bar-chart-o">
+                                <p:menuitem value="Relatório Funcionários" icon="icon-users"  />
+                                <p:menuitem value="Relatório Banco de Horas" icon="icon-user" />
+                            </p:submenu>
+                            <p:submenu label="SAIR" icon="fa fa-power-off">
+                                <p:menuitem ajax="false" value="Deslogar" action="#{usuarioBean.deslogar()}" />
+                            </p:submenu>
+
+                        </pv:menu>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ui:composition>

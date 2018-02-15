@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="corpo">              
+
+        <h:form  id="form" >
+            <p:growl autoUpdate="true" id="equi" />
+
+            <p:tabView>
+                <p:tab title="Importar Registros"  >
+
+                    <h:form  id="os" enctype="multipart/form-data" style="width:500px">
+                        <br></br>
+                        <p:growl id="msg" />
+
+                        <p:outputLabel value="Importar Arquivo do Relógio"><br/><br/>
+                            <p:fileUpload update="form,msg" fileLimit="1" invalidSizeMessage="Tamanho excedido!" cancelLabel="Cancelar" uploadLabel="Carregar" label="Escolher"
+                                          invalidFileMessage="Tipo de arquivo invalido!" fileLimitMessage="Numero de arquivo ultrapassado!"  
+                                          value="#{fileUploadBean.file}" allowTypes="/(\.|\/)(txt|csv)$/" mode="advanced" multiple="false" 
+                                          fileUploadListener="#{fileUploadBean.fileUploadListener}"  />
+                        </p:outputLabel>
+                        <br></br>
+
+                    </h:form>
+
+                </p:tab>
+
+
+            </p:tabView>
+
+        </h:form>  
+
+
+    </ui:define>
+
+</ui:composition>

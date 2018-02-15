@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <title>Cadastrar Departamento</title>  
+        <p:growl autoUpdate="true" id="cadastrar" />
+        <h:form >
+            <h2>Departamento</h2>
+            <p:tabView >
+
+                <p:tab title="Dados Genéricos"  >
+
+                    <p:panelGrid id="painelDepartamento" columns="2" styleClass="ui-panelgrid-blank form-group" >
+
+                        <p:outputLabel value="ID: ">
+                            <br/>
+                            <p:inputText  id="id" value="#{departamentoBean.departamento.id}" size="10" />
+                        </p:outputLabel>
+
+
+                        <p:outputLabel value="Descrição:">
+                            <br/>
+                            <p:inputText required="true" requiredMessage="Preencha a Descrição" id="descricao" 
+                                         value="#{departamentoBean.departamento.descricao}" size="55"  />
+                        </p:outputLabel>
+
+
+                        <p:outputLabel value="Secretaria:">
+                            <br/>
+                            <p:selectOneMenu  id="secretaria" value="#{departamentoBean.departamento.secretaria}" style="width:300px" 
+                                              converter="entityConverter" required="true" requiredMessage="Selecio a Secretaria">
+                                <f:attribute name="collectionType" value="java.util.ArrayList" />
+                                <f:selectItem itemLabel="Selecione a Secretaria"  />
+                                <f:selectItems value="#{departamentoBean.secretarias}" var="secretaria" 
+                                               itemLabel="#{secretaria.nome}" itemValue="#{secretaria}" />
+                            </p:selectOneMenu>
+
+                        </p:outputLabel>
+
+
+                        <p:outputLabel value="Empresa: ">
+                            <br/>
+                            <p:selectOneMenu  id="empresa" value="#{departamentoBean.departamento.empresa}" style="width:300px" 
+                                              converter="entityConverter" required="true" requiredMessage="Selecio a Empresa">
+                                <f:attribute name="collectionType" value="java.util.ArrayList" />
+                                <f:selectItem itemLabel="Selecione a Secretaria"  />
+                                <f:selectItems value="#{departamentoBean.listempresas}" var="empresa" 
+                                               itemLabel="#{empresa.empresa}" itemValue="#{empresa}" />
+                            </p:selectOneMenu>
+                        </p:outputLabel>
+
+                    </p:panelGrid>   
+
+                </p:tab>
+
+            </p:tabView>
+            <br></br>
+            <h:panelGrid width="100%" style="text-align:center">
+                <p:commandButton   value="Salvar" style="height: 40px; width: 1300px;align-content: center;" icon="fa fa-fw fa-save" action="#{departamentoBean.gravarDepartamento()}"    ajax="false"/>
+            </h:panelGrid>
+            <br></br>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

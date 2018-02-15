@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <title>Cadastrar Funcionário</title>  
+        <p:growl autoUpdate="true" id="cadastrar" />
+        <ui:include src="/View/js/calendar-pt.xhtml" />
+<!--
+        <p:commandLink action="#{funcionarioBean.listar()}" >
+            <p:graphicImage  name="images/retorno.png" library="verona-layout" />
+        </p:commandLink>-->
+
+        <h:form >
+
+            <h2>Funcionário</h2>
+            <p:tabView >
+
+                <p:tab title="Dados Genéricos"  >
+                    <div class="card card-w-title">
+                        <p:panelGrid id="painelFuncionario" columns="4" styleClass="ui-panelgrid-blank form-group" >
+
+                            <p:outputLabel for="id" value="ID"/>
+                            <p:inputText  id="id" value="#{funcionarioBean.funcionario.id}"  />
+
+                            <p:outputLabel for="nome" value="Nome:"/>
+                            <p:inputText required="true" requiredMessage="Preencha o Nome" id="nome" value="#{funcionarioBean.funcionario.nome}" size="55"  />
+
+                            <p:outputLabel for="matricula" value="Matricula:"/>
+                            <p:inputText required="true" requiredMessage="Preencha a Matricula" id="matricula" value="#{funcionarioBean.funcionario.matricula}" size="20" >
+                            </p:inputText>
+
+                            <p:outputLabel for="pis" value="PIS:"/>
+                            <p:inputText required="true" requiredMessage="Preencha o PIS" id="pis" value="#{funcionarioBean.funcionario.pis}" size="20" >
+                            </p:inputText>
+
+                            <h:outputText value="Secretário " />
+                            <p:selectBooleanCheckbox  value="#{funcionarioBean.funcionario.secretario}" />
+
+                        </p:panelGrid>   
+                    </div>
+
+                </p:tab>
+
+            </p:tabView>
+            <br></br    >
+            <p:tabView>
+                <p:tab title="Dados Complementares">
+                    <div class="card card-w-title">
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank form-group" >
+
+
+                            <p:outputLabel for="funcao" value="Função: ">
+                                <p:selectOneMenu filter="true" filterMatchMode="startsWith" id="funcao" value="#{funcionarioBean.funcionario.funcao}" style="width:300px"
+                                                 required="true" requiredMessage="Selecio a Função" converter="entityConverter">
+                                    <f:attribute name="collectionType" value="java.util.ArrayList" />
+                                    <f:selectItem itemLabel="Selecione a Função"  />
+                                    <f:selectItems value="#{funcionarioBean.funcaos}" var="funcao" 
+                                                   itemLabel="#{funcao.descricao}" itemValue="#{funcao}" />
+
+                                </p:selectOneMenu>
+                            </p:outputLabel>
+
+                            <p:outputLabel for="departamento" value="Departamento:    ">
+                                <p:selectOneMenu   filter="true" filterMatchMode="startsWith" id="departamento" value="#{funcionarioBean.funcionario.departamento}" style="width:300px" 
+                                                   required="true" requiredMessage="Selecio o Departamento" converter="entityConverter">
+                                    <f:attribute name="collectionType" value="java.util.ArrayList" />
+                                    <f:selectItem itemLabel="Selecione o Departamento"  />
+                                    <f:selectItems value="#{funcionarioBean.departamentos}" var="departamento" 
+                                                   itemLabel="#{departamento.descricao}" itemValue="#{departamento}" />
+                                </p:selectOneMenu>
+                            </p:outputLabel>
+
+                            <p:outputLabel for="horario" value="Horário ">
+                                <p:selectOneMenu filter="true" filterMatchMode="startsWith" id="horario" value="#{funcionarioBean.funcionario.horario}" style="width:300px"
+                                                 required="true" requiredMessage="Selecione o Horário" converter="entityConverter">
+                                    <f:attribute name="collectionType" value="java.util.ArrayList" />
+                                    <f:selectItem itemLabel="Selecione o Horário"  />
+                                    <f:selectItems value="#{funcionarioBean.horarios}" var="horario" 
+                                                   itemLabel="#{horario.nome}" itemValue="#{horario}" />
+
+                                </p:selectOneMenu>
+                            </p:outputLabel>
+
+                            <p:outputLabel for="dataadm" value="Data Adimissão ">
+                                <p:calendar  id="dataadm" required="true" requiredMessage="Adimissão" value="#{funcionarioBean.funcionario.dataadm}" showOn="button" pattern="dd/MM/yyyy" mask="true"  
+                                             timeZone="America/Boa_Vista"/>
+                            </p:outputLabel>
+
+                        </p:panelGrid>   
+                    </div>
+                </p:tab>
+
+            </p:tabView>
+            <br></br    >
+            <h:panelGrid width="100%" style="text-align:left">
+                <p:commandButton   value="Salvar" style="height: 40px; width: 1300px;align-content: center;" icon="fa fa-fw fa-save" action="#{funcionarioBean.gravarFuncionario()}"  ajax="false"/>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

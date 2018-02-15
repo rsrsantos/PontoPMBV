@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <title>Cadastrar Secretaria</title>  
+        <p:growl autoUpdate="true" id="cadastrar" />
+        <h:form >
+            <h2>Secretaria</h2>
+            <p:tabView >
+
+                <p:tab title="Dados Genéricos"  >
+
+                    <p:panelGrid id="painelSecretaria" columns="2" styleClass="ui-panelgrid-blank form-group" >
+
+                        <p:outputLabel value="ID" style="width:10px" />
+                        <p:inputText  id="id" value="#{secretariaBean.secretaria.id}" size="10" />
+
+                        <p:outputLabel value="Empresa:"/>
+                        <p:selectOneMenu id="empresa" value="#{secretariaBean.secretaria.empresa}"  
+                                         converter="entityConverter" required="true" requiredMessage="Selecio a Empresa">
+                            <f:selectItem itemLabel="Selecione..."  noSelectionOption="true" />
+                            <f:selectItems value="#{secretariaBean.empresas}" var="empresa" 
+                                           itemLabel="#{empresa.empresa}" itemValue="#{empresa}" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Secretario: "/>
+                        <p:selectOneMenu id="secretario" value="#{secretariaBean.secretaria.funcionario}"  
+                                         converter="entityConverter" required="true" requiredMessage="Selecio o Secretario">
+                            <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+                            <f:selectItems value="#{secretariaBean.secretarios}" var="secretario" 
+                                           itemLabel="#{secretario.nome}" itemValue="#{secretario}" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Descrição:"/>
+                        <p:inputText required="true" requiredMessage="Preencha a Descrição" id="descricao" 
+                                     value="#{secretariaBean.secretaria.nome}" size="55"  />
+
+
+                    </p:panelGrid>   
+                </p:tab>
+            </p:tabView>
+            <br></br>
+            <h:panelGrid width="100%" style="text-align:center">
+                <p:commandButton   value="Salvar" style="height: 40px; width: 1300px;align-content: center;" icon="fa fa-fw fa-save" action="#{secretariaBean.gravarSecretaria()}"  ajax="false"/>
+            </h:panelGrid>
+            <br></br>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

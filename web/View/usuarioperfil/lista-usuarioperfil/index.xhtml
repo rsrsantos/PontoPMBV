@@ -1,0 +1,64 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <p:growl autoUpdate="true" />
+        <title>Perfil Usuario</title>  
+
+        <h:form >
+            <p:tabView>
+                <p:tab title="Usuário" >
+                    <p:commandButton value="Novo" icon="fa fa-user-plus" action="#{usuarioPerfilBean.novoUsuarioPerfil()}"  ajax="false"  />
+                    <br></br><br></br>
+
+                    <h:panelGrid columns="4"  styleClass="right">
+                        <div class="ui-g-12">
+                            <div class="card card-w-title">
+                                <p:dataTable id="tbl" var="usuarioperfil"  value="#{usuarioPerfilBean.listaUsuarioPerfil}" emptyMessage="Nenhum registro encontrado" reflow="true"
+                                             paginator="true" rows="5" style="margin-bottom:20px">
+
+                                    <f:facet name="header">
+                                        PERFIS CADASTRADOS
+                                    </f:facet>
+                                    <p:column headerText="Descrição" filterBy="#{usuarioperfil.descricao}" sortBy="#{usuarioperfil.descricao}" filterMatchMode="contains">
+                                        <h:outputText  value="#{usuarioperfil.descricao}"/>
+                                    </p:column>
+
+
+                                    <p:column headerText="Ação"  style="width:150px ">
+                                        <p:commandButton ajax="false" icon="fa fw fa-trash-o" action="#{usuarioPerfilBean.excluir(usuarioperfil)}" >
+                                        </p:commandButton>
+
+                                        <p:commandButton  ajax="false" icon="fa fw fa-edit" action="#{usuarioPerfilBean.editar(usuarioperfil)}"/>
+
+
+                                    </p:column>
+
+
+                                </p:dataTable>
+                            </div>
+                        </div>
+
+                    </h:panelGrid>   
+
+                    <!--                    <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+                    
+                                        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                                            <p:graphicImage name="images/preloader.gif" library="verona-layout" />
+                                        </p:dialog>-->
+
+
+
+                </p:tab>
+
+
+            </p:tabView>	
+        </h:form>
+    </ui:define>
+</ui:composition>
+

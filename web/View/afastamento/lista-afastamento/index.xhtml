@@ -1,0 +1,88 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="corpo">              
+        <title>Afastamentos</title>
+
+        <h:form  id="form" >
+            <p:growl autoUpdate="true" id="equi" />
+
+            <p:tabView>
+                <p:tab title="Afastamentos"  >
+                    <p:commandButton value="Novo" action="#{afastamentoBean.novoAfastamento()}" icon="ui-icon-circle-plus" ajax="false" />
+                    <br></br><br></br>
+                    <h:panelGrid columns="4" >
+                        <div class="ui-g-12">
+                            <div class="card card-w-title">
+                                <p:dataTable id="tbl" var="afastamento" value="#{afastamentoBean.afastamentos}"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                                             currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
+                                             - Página: {currentPage}/{totalPages} ]"
+                                             paginator="true" rows="5" style="margin-bottom:20px">
+
+                                    <f:facet name="header">
+                                        AFASTAMENTOS
+                                    </f:facet>
+
+                                    <p:column headerText="ID"  filterBy="#{afastamento.id}" sortBy="#{afastamento.id}" filterMatchMode="contains">
+                                        <h:outputText id="id" value="#{afastamento.id}"  />
+                                    </p:column>
+
+                                    <p:column headerText="Descrição"  filterBy="#{afastamento.descricao}" sortBy="#{afastamento.descricao}" filterMatchMode="contains">
+                                        <h:outputText id="FunciNome" value="#{afastamento.descricao}"  >
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="Tipo"  filterBy="#{afastamento.justificativa.nome}" sortBy="#{afastamento.justificativa.nome}" filterMatchMode="contains">
+                                        <h:outputText id="FunciTipo" value="#{afastamento.justificativa.nome}"  />
+                                    </p:column>
+
+                                    <p:column headerText="Data Inicio"  filterBy="#{afastamento.data_inicio}" sortBy="#{afastamento.data_inicio}" filterMatchMode="contains">
+                                        <h:outputText id="datainicio" value="#{afastamento.data_inicio}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="Data Fim"  filterBy="#{afastamento.data_fim}" sortBy="#{afastamento.data_fim}" filterMatchMode="contains">
+                                        <h:outputText id="datafim" value="#{afastamento.data_fim}"  >
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="Última Alteração"  filterBy="#{afastamento.ultima_alteracao}" sortBy="#{afastamento.ultima_alteracao}" filterMatchMode="contains">
+                                        <h:outputText id="alteracao" value="#{afastamento.ultima_alteracao}"  >
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="Usuario"  filterBy="#{afastamento.usuario}" sortBy="#{afastamento.usuario}" filterMatchMode="contains">
+                                        <h:outputText id="usuario" value="#{afastamento.usuario.funcionario.nome}"  >
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="Ação"  style="width:150px">
+                                        <p:commandButton icon="fa fw fa-edit" ajax="false" action="#{afastamentoBean.editar(afastamento)}"/>
+                                        <p:commandButton  ajax="false" icon="fa fw fa-trash-o" action="#{afastamentoBean.excluir(afastamento)}"   />
+                                        <p:commandButton    ajax="false" value="Processar" action="#{afastamentoBean.processaAfastamento(afastamento)}" />
+                                    </p:column>
+
+                                </p:dataTable >
+                            </div>
+                        </div>
+                    </h:panelGrid > 
+
+                </p:tab>
+
+            </p:tabView>
+
+        </h:form>  
+
+
+    </ui:define>
+
+
+</ui:composition>

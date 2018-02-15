@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <h:form id="form" >
+            <p:growl id="messages" autoUpdate="true" />
+            <p:tabView>
+                <p:tab title="Feriados">
+                    <p:commandButton value="Novo" action="#{feriadoBean.novoFeriado(feriado)}" icon="ui-icon-circle-plus" ajax="false" />
+                    <br></br> <br></br>
+
+                    <h:panelGrid columns="4" cellpadding="10" >
+                        <div class="ui-g-12">
+                            <div class="card card-w-title">
+                                <p:dataTable id="tblFeriados" var="feriado"  value="#{feriadoBean.feriados}"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
+                                             "
+                                             currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
+                                             - Página: {currentPage}/{totalPages} ]"
+                                             paginator="true" rows="10" style="margin-bottom:20px">
+                                    <f:facet name="header">
+                                        FERIADOS
+                                    </f:facet>
+                                    <p:column headerText="ID">
+                                        <h:outputText id="id" value="#{feriado.id}"  />
+
+                                    </p:column>
+                                    <p:column headerText="Nome">
+                                        <h:outputText  value="#{feriado.nome}"/>
+
+                                    </p:column>
+                                    <p:column headerText="Data Feriado" >
+                                        <h:outputText id="data_feriado" value="#{feriado.dataferiado}" >
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="Ação"  style="width:160px"  >
+                                        <p:commandButton  ajax="false" icon="fa fw fa-edit" action="#{feriadoBean.editar(feriado)}"/>
+                                        <p:commandButton  ajax="false" value="Lançar" action="#{feriadoBean.lancaFeriado(feriado)}"/>
+
+                                        <p:commandButton icon="fa fw fa-trash-o" actionListener="#{feriadoBean.excluir(feriado)}" update="tblFeriados" >
+                                            <p:confirm header="Confirmação" message="Tem Certeza?" icon="ui-icon-alert" />
+                                        </p:commandButton>
+
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                        </p:confirmDialog>
+
+
+
+                                    </p:column>
+
+
+
+
+                                </p:dataTable>
+
+                            </div>
+                        </div>
+
+                    </h:panelGrid>  
+
+
+                </p:tab>
+
+
+            </p:tabView>	
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

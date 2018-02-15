@@ -1,0 +1,75 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <title>Empresas</title>  
+        <h:form >
+            <p:growl autoUpdate="true" />
+            <p:tabView>
+                <p:tab title="Empresa">
+                    <p:commandButton value="Novo" action="#{empresaBean.novaEmpresa()}" icon="ui-icon-circle-plus" ajax="false" />
+                    <br></br> <br></br>
+
+                    <p:panel id="tabelaEmpresa">
+                        <h:panelGrid columns="4" cellpadding="10" >
+                            <div class="ui-g-12">
+                                <div class="card card-w-title">
+                                    <p:dataTable id="tbl" var="empresa" value="#{empresaBean.listaEmpresa}" reflow="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}                                                 "
+                                                 currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
+                                                 - Página: {currentPage}/{totalPages} ]"
+                                                 paginator="true" rows="10" style="margin-bottom:20px">
+
+                                        <f:facet name="header">
+                                            EMPRESAS
+                                        </f:facet>
+                                        <p:column headerText="Empresa">
+                                            <h:outputText id="nome" value="#{empresa.empresa}"  />
+
+                                        </p:column>
+                                        <p:column headerText="CNPJ">
+                                            <h:outputText  value="#{empresa.cnpj}"/>
+
+                                        </p:column>
+                                        <p:column headerText="Inscrição" >
+                                            <h:outputText id="departamento" value="#{empresa.inscricao}" />
+                                        </p:column>
+                                        <p:column headerText="Endereço" >
+                                            <h:outputText id="endereco" value="#{empresa.endereco}" />
+                                        </p:column>
+
+                                        <p:column headerText="Ação"  style="width:80px"  >
+                                            <p:commandButton  ajax="false" icon="fa fw fa-edit" action="#{empresaBean.editar(empresa)}"/>
+
+                                            <p:commandButton ajax="false" icon="fa fw fa-trash-o" action="#{empresaBean.excluir(empresa)}" >
+                                            </p:commandButton>
+
+                                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                            </p:confirmDialog>
+
+
+
+                                        </p:column>
+
+                                    </p:dataTable>
+
+                                </div>
+                            </div>
+
+                        </h:panelGrid>  
+                    </p:panel>
+
+                </p:tab>
+
+            </p:tabView>	
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

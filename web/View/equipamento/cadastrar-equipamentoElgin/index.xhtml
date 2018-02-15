@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <title>Novo Equipamento</title>  
+
+        <h:form>
+            <p:growl autoUpdate="true"  />
+            <h2>Equipamento</h2>
+            <p:tabView>
+
+                <p:tab title="Dados Genéricos">
+                    <p:separator />
+                    <h:panelGrid columns="4" cellpadding="10">
+
+                        <p:outputLabel value="Código:"/>
+                        <p:inputText  id="codigo"  size="20" value="#{ptoEquipamentoBeanElgi.ptoEquipamentoElgin.id}" />
+
+                        <p:outputLabel for="descricao" value="Descrição:"/>
+                        <p:inputText required="true" requiredMessage="Preencha a Descrição" id="descricao" size="46" value="#{ptoEquipamentoBeanElgi.ptoEquipamentoElgin.descricaoel}" />
+
+                        <p:outputLabel for="nfabricacao" value="Nº Fabricação:"/>
+                        <p:inputText  id="nfabricacao" maxlength="19" required="true" requiredMessage="Nº Fabricação" value="#{ptoEquipamentoBeanElgi.ptoEquipamentoElgin.nfabricacaoel}">
+                            <f:validateDoubleRange  />
+                        </p:inputText>
+
+                        <p:outputLabel for="modelo" value="Modelo"/>
+                        <p:selectOneMenu id="modelo" value="#{ptoEquipamentoBeanElgi.ptoequipamentoelgin.modeloel}" style="width:300px" required="true" requiredMessage="Modelo">
+                            <f:selectItem itemLabel="Selecione o Modelo"  />
+                            <f:selectItems value="#{modeloBean.modelos}" var="modelo" 
+                                           itemLabel="#{modelo.modelo}" itemValue="#{modelo.id}" />
+                        </p:selectOneMenu>
+
+                    </h:panelGrid>   
+                    <p:separator/>
+
+                </p:tab>
+
+            </p:tabView>
+
+            <p:tabView>
+                <p:tab title="Dados Complementares">
+                    <p:separator />
+                    <h:panelGrid columns="4" cellpadding="10" >
+
+                        <p:outputLabel for="datainicio" value="Data inicio:"/>
+                        <p:inputMask id="datainicio" mask="99/99/9999" size="20" required="true" requiredMessage="Data Inicio" value="#{ptoEquipamentoBeanElgi.ptoEquipamentoElgin.datainicio}"/>
+
+                        <p:outputLabel for="datafim" value="Data Fim"/>
+                        <p:inputMask id="datafim" mask="99/99/9999" size="20"  required="true" requiredMessage="Data Fim" value="#{ptoEquipamentoBeanElgi.ptoEquipamentoElgin.datafim}"/>
+
+                        <p:outputLabel for="ip" value="Ip:"/>
+                        <p:inputMask id="ip" mask="999.999.999.999" required="true" requiredMessage="Preencha o IP"  size="45" value="#{ptoEquipamentoBeanElgi.ptoEquipamentoElgin.ipel}">
+
+                        </p:inputMask>
+                        <p:outputLabel for="porta" value="Porta:"/>
+                        <p:inputText id="porta" required="true"  requiredMessage="Preencha a Porta"   maxlength="4" value="#{ptoEquipamentoBeanElgi.ptoEquipamentoElgin.portael}" /> 
+
+                        <p:outputLabel for="localidade" value="Localidade:"/>
+                        <p:inputText id="localidade" required="true" requiredMessage="Localidade" value="#{ptoEquipamentoBeanElgi.ptoEquipamentoElgin.localidadeel}" size="45"  />
+
+                    </h:panelGrid>   
+
+                    <p:separator/><br/>
+                    <h:panelGrid width="100%" style="text-align:center">
+                        <p:commandButton   value="Salvar" style="height: 40px; width: 1300px;align-content: center;" icon="fa fa-fw fa-save" action="#{ptoEquipamentoBeanElgi.gravarEquipamento()}"   ajax="false"/>
+                    </h:panelGrid>
+
+                </p:tab>
+
+            </p:tabView>
+
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

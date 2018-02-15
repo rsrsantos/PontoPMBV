@@ -1,0 +1,112 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"    
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <title>Novo Equipamento</title> 
+
+        <h:form>
+            <p:growl autoUpdate="true"  />
+            <h2>Equipamento</h2>
+            <p:tabView>
+                <p:tab title="Dados Genéricos">
+                    <h:panelGrid columns="2" cellpadding="10">
+
+                        <p:outputLabel value="ID: ">
+                            <br/>
+                            <p:inputText  id="id" value="#{ptoEquipamentoBeanHenry.ptoequipamento.id}"/>
+                        </p:outputLabel>
+
+                        <p:outputLabel for="descricao" value="Descrição: ">
+                            <br/>
+                            <p:inputText required="true"  requiredMessage="Preencha a Descrição" id="descricao" size="46" value="#{ptoEquipamentoBeanHenry.ptoequipamento.descricao}" />
+                        </p:outputLabel>
+
+                        <p:outputLabel for="modelo" value="Modelo">
+                            <br/>
+                            <p:selectOneMenu filter="true" filterMatchMode="startsWith" id="modelo" 
+                                             value="#{ptoEquipamentoBeanHenry.ptoequipamento.modelo}" converter="entityConverter"
+                                             style="width:300px" required="true" requiredMessage="Modelo">
+                                <f:selectItem itemLabel="Selecione o Modelo"  />
+                                <f:selectItems value="#{modeloBean.modelos}" var="modelo" 
+                                               itemLabel="#{modelo.modelo}" itemValue="#{modelo}" />
+                            </p:selectOneMenu>
+                        </p:outputLabel>
+
+                        <p:outputLabel for="departamento" value="Departamento: ">
+                            <br/>
+                            <p:selectOneMenu filter="true" filterMatchMode="startsWith" id="departamento" 
+                                             value="#{ptoEquipamentoBeanHenry.ptoequipamento.departamento}" style="width:300px" 
+                                             required="true" requiredMessage="Departamento" converter="entityConverter">
+                                <f:selectItem itemLabel="Selecione o Departamento"  />
+                                <f:selectItems value="#{ptoEquipamentoBeanHenry.listDepartamento}" var="departamento" 
+                                               itemLabel="#{departamento.descricao}" itemValue="#{departamento}" />
+                            </p:selectOneMenu> 
+                        </p:outputLabel>
+
+                    </h:panelGrid>   
+
+                </p:tab>
+
+            </p:tabView>
+            <br/>
+            <p:tabView>
+                <p:tab title="Dados Complementares" >
+                    <h:panelGrid columns="2" cellpadding="10" >
+
+                        <p:outputLabel for="ip" value="IP:">
+                            <br/>
+                            <p:inputMask id="ip" mask="999.999.999.999" required="true" requiredMessage="Preencha o IP"  size="45" value="#{ptoEquipamentoBeanHenry.ptoequipamento.ip}"/>
+                        </p:outputLabel>
+
+
+                        <p:outputLabel for="porta" value="Porta:">
+                            <br/>
+                            <p:inputText id="porta" required="true" requiredMessage="Porta" maxlength="4" value="#{ptoEquipamentoBeanHenry.ptoequipamento.porta}">
+                                <f:validateDoubleRange  />
+                            </p:inputText> 
+                        </p:outputLabel>
+
+                        <p:outputLabel for="nsr" value="Nsr:"> 
+                            <br/>
+                            <p:inputText id="nsr" value="#{ptoEquipamentoBeanHenry.ptoequipamento.ultimonsr}" required="true" requiredMessage="Nsr"
+                                         maxlength="9"/>
+                        </p:outputLabel>
+
+
+                        <p:outputLabel for="senha" value="Senha Menu:">
+                            <br/>
+                            <p:password required="true" requiredMessage="Senha Menu" maxlength="19"  id="senha"  value="#{ptoEquipamentoBeanHenry.ptoequipamento.senhaMenu}" redisplay="true"  
+                                        >
+                            </p:password>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Tipo de Corte">
+                            <br/>
+                            <p:selectOneMenu id="corte" value="#{ptoEquipamentoBeanHenry.ptoequipamento.tipocorte}" style="width:300px" 
+                                             required="true" requiredMessage="Tipo Corte" converter="entityConverter">
+                                <f:selectItem itemLabel="Selecione Tipo Corte"  />
+                                <f:selectItems value="#{tipoCorteBean.tipoCortes}" var="corte" 
+                                               itemLabel="#{corte.descricao}" itemValue="#{corte}" />
+                            </p:selectOneMenu>
+                        </p:outputLabel>
+
+                    </h:panelGrid>   
+
+
+                </p:tab>
+
+            </p:tabView>
+            <br/>
+            <h:panelGrid width="100%" style="text-align:center">
+                <p:commandButton   value="Salvar" style="height: 40px; width: 1300px;align-content: center;" icon="fa fa-fw fa-save" action="#{ptoEquipamentoBeanHenry.gravarEquipamento()}"  ajax="false"/>
+            </h:panelGrid>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

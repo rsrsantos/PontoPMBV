@@ -1,0 +1,99 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="corpo">              
+        <title>Função</title>
+        <p:growl autoUpdate="true" />
+        <h:form>
+            <p:tabView>
+                <p:tab title="Função">
+                    <p:commandButton value="Novo" icon="ui-icon-circle-plus" action="#{funcaoBean.novaFuncao()}" ajax="false" />
+                    <br></br> <br></br> 
+
+                    <h:panelGrid columns="4" cellpadding="10">
+                        <div class="ui-g-12">
+                            <div class="card card-w-title">
+                                <p:dataTable id="tbl" var="funcao" value="#{funcaoBean.funcaos}" emptyMessage="Nenhum registro encontrado" 
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                             currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
+                                             - Página: {currentPage}/{totalPages} ]"
+                                             paginator="true" rows="8" style="margin-bottom:20px" >
+
+                                    <f:facet name="header">
+                                        FUNÇÃO
+                                    </f:facet>
+                                    <f:facet name="{Exporters}">
+                                        <h:commandLink>
+                                            <p:graphicImage value="/images/excel.png" width="24"  />
+                                            <p:dataExporter type="xls" target="tbl" fileName="Função"  />
+                                        </h:commandLink>
+
+
+
+
+                                    </f:facet>
+
+
+                                    <p:column headerText="ID"  filterBy="#{funcao.id}" sortBy="#{funcao.id}" style="width:120px" filterMatchMode="contains">
+                                        <h:outputText id="id" value="#{funcao.id}"  />
+                                    </p:column>
+
+                                    <p:column headerText="Descrição" filterBy="#{funcao.descricao}" sortBy="#{funcao.descricao}" filterMatchMode="contains">
+                                        <h:outputText  id="descricao" value="#{funcao.descricao}" />
+                                    </p:column>
+
+
+                                    <p:column headerText="Ação"  style="width:80px">
+                                        <p:commandButton icon="fa fw fa-edit" ajax="false" action="#{funcaoBean.editar(funcao)}"/>
+
+                                        <p:commandButton ajax="false  " icon="fa fw fa-trash-o" action="#{funcaoBean.excluir(funcao)}"  >
+                                            <!--<p:confirm header="Confirmação" message="Tem Certeza?" icon="ui-icon-alert" />-->
+                                        </p:commandButton>
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                        </p:confirmDialog>
+                                    </p:column>
+
+
+
+
+
+
+                                </p:dataTable >
+
+
+                            </div>
+                        </div>
+
+                    </h:panelGrid > 
+
+
+
+
+
+                    <p:separator/>
+
+
+
+                </p:tab>
+
+
+            </p:tabView>
+
+
+
+        </h:form>               
+
+
+
+    </ui:define>
+
+
+
+</ui:composition>

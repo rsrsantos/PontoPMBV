@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                >
+
+    <ui:define name="corpo"> 
+        
+        <title>Cadastrar Usuario</title>  
+        <p:growl autoUpdate="true" id="valida"/>
+        <h:form>
+            <h2>Usuario</h2>
+            <p:tabView>
+
+                <p:tab title="Cadastrar Funcionário">
+
+                    <p:panelGrid id="painelFuncionario" columns="4" styleClass="ui-panelgrid-blank form-group"  >
+
+                        <p:outputLabel value="ID:"/>
+                        <p:inputText id="id" value="#{usuarioBean.usuario.id}" size="10" />
+
+                        <p:outputLabel for="nome" value="Funcionário"/>
+                        <p:selectOneMenu filter="true" filterMatchMode="startsWith" id="nome" value="#{usuarioBean.usuario.funcionario}" style="width:300px" required="true" requiredMessage="Funcionário" converter="entityConverter">
+                            <f:attribute name="collectionType" value="java.util.ArrayList" />
+                            <f:selectItem itemLabel="Selecione o Funcionário"  />
+                            <f:selectItems value="#{usuarioBean.funcionarios}" var="funcionario" 
+                                           itemLabel="#{funcionario.nome}" itemValue="#{funcionario}" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="departamento" value="Departamento"/>
+                        <p:selectCheckboxMenu label="departamento" filter="true" filterMatchMode="startsWith" id="departamento" 
+                                              value="#{usuarioBean.usuario.departamento}" style="width:300px"
+                                              converter="entityConverter">
+                            <f:attribute name="collectionType" value="java.util.ArrayList" />
+                            <f:selectItems value="#{usuarioBean.departamento}" var="departamento" 
+                                           itemLabel="#{departamento.descricao}" itemValue="#{departamento}" />
+                        </p:selectCheckboxMenu>
+
+                        <p:outputLabel for="perfil" value="Perfil Usuario"/>
+                        <p:selectOneMenu filter="true" filterMatchMode="startsWith" id="perfil" value="#{usuarioBean.usuario.usuarioPerfil}"
+                                         style="width:300px" required="true" requiredMessage="Funcionário" converter="entityConverter">
+                            <f:attribute name="collectionType" value="java.util.ArrayList" />
+                            <f:selectItem itemLabel="Selecione..." noSelectionOption="true"  />
+                            <f:selectItems value="#{usuarioBean.listaPerfilUsuario}" var="perfil" 
+                                           itemLabel="#{perfil.descricao}" itemValue="#{perfil}" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="email" value="Email:"/>
+                        <p:inputText required="true" requiredMessage="Preencha o Email" validatorMessage="Email Inválido" id="email" value="#{usuarioBean.usuario.email}" size="55" 
+                                     placeholder="exemplo@email.com" >
+                        </p:inputText>
+                        <p:outputLabel for="login" value="Login:"/>
+                        <p:inputText required="true" requiredMessage="Preencha o Login" id="login" value="#{usuarioBean.usuario.login}" size="55" >
+                        </p:inputText>
+
+                        <p:outputLabel for="senha" value="Senha:"/>
+                        <p:password feedback="true" required="true" requiredMessage="Preencha a Senha" id="senha" value="#{usuarioBean.usuario.senha}" size="55" 
+                                    promptLabel="Muito Fraca" weakLabel="Fraca"
+                                    goodLabel="Boa" strongLabel="ótima"
+                                    redisplay="true"    
+                                    />
+
+
+
+                    </p:panelGrid>  
+
+
+                </p:tab>
+
+            </p:tabView>
+            <br></br>
+            <h:panelGrid width="100%" style="text-align:left">
+                <p:commandButton   value="Salvar" style="height: 40px; width: 1550px;align-content: center;" icon="fa fa-fw fa-save" action="#{usuarioBean.gravar()}"   ajax="false"/>
+            </h:panelGrid>
+
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

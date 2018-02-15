@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <p:growl autoUpdate="true" id="cadastrar" />
+        <h:form >
+            <h2>Periodo</h2>
+            <p:tabView >
+
+                <p:tab title="Dados Genéricos"  >
+
+                    <p:panelGrid id="painelPeriodo" columns="5" styleClass="ui-panelgrid-blank form-group"  >
+
+                        <p:outputLabel value="ID">
+                            <br/>
+                            <p:inputText  id="id" value="#{folhaPeriodoBean.periodoFolha.id}" size="10"   />
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Periodo  ">
+                            <br/>
+                            <p:inputText required="true" value="#{folhaPeriodoBean.periodoFolha.periodo}" requiredMessage="Preencha o Nome" id="periodo" size="35" />
+                        </p:outputLabel>
+
+                        <p:outputLabel  value="Periodo Mensal:  ">
+                            <br/>
+                            <p:calendar  id="inicioFolha" required="true" requiredMessage="Inicio" value="#{folhaPeriodoBean.periodoFolha.inicioFolha}" showOn="button" pattern="dd/MM/yyyy" mask="true"  
+                                         locale="pt_BR" timeZone="America/Boa_Vista"/>
+                            <p:spacer width="10" />
+                            <p:outputLabel value="á" />
+                            <p:spacer width="10" />
+                            <p:calendar  id="fimFolha" required="true" requiredMessage="Inicio" value="#{folhaPeriodoBean.periodoFolha.fimFolha}" showOn="button" 
+                                         pattern="dd/MM/yyyy" mask="true"  locale="pt_BR" timeZone="America/Boa_Vista"/>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Folha Anterior">
+                            <br/>
+                            <p:inputText value="#{folhaPeriodoBean.periodoFolha.periodoAnterior}" />
+                        </p:outputLabel>
+
+
+                    </p:panelGrid>   
+
+                </p:tab>
+
+
+            </p:tabView>
+
+            <p:panel>
+                <p:outputLabel value="Última Alteração : ">
+                    <p:outputLabel value="#{folhaPeriodoBean.periodoFolha.ultima_Alteracao}" />
+                </p:outputLabel>
+                <br/><br/>
+                <p:outputLabel value="Usuário : ">
+                    <p:outputLabel value="#{folhaPeriodoBean.periodoFolha.usuario.funcionario.nome}" />
+                </p:outputLabel>
+
+            </p:panel>
+            <br></br>
+            <h:panelGrid width="100%" style="text-align:center">
+                <p:commandButton   value="Salvar" style="height: 40px; width: 1300px;align-content: center;" icon="fa fa-fw fa-save" action="#{folhaPeriodoBean.gravarPeriodoFolha()}"    ajax="false"/>
+            </h:panelGrid>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

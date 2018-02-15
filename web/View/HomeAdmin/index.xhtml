@@ -1,0 +1,277 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui"
+                template="/WEB-INF/template.xhtml">
+    
+    <ui:define name="title">Dashboard</ui:define>
+
+    <ui:define name="head">
+        <script type="text/javascript">
+            //<![CDATA[
+            function skinBar() {
+                this.cfg.shadow = false;
+                this.cfg.title = '';
+                this.cfg.seriesColors = ['#9fd037', '#f7cb00'];
+                this.cfg.grid = {
+                    background: '#ffffff',
+                    borderColor: '#ffffff',
+                    gridLineColor: '#dce2e7',
+                    shadow: false
+                };
+                this.cfg.axesDefaults = {
+                    borderWidth: 0.1,
+                    borderColor: 'dce2e7',
+                    rendererOptions: {
+                        textColor: '#2d353c'
+                    }
+                };
+                this.cfg.seriesDefaults = {
+                    shadow: false,
+                    lineWidth: 1,
+                    renderer: $.jqplot.BarRenderer,
+                    markerOptions: {
+                        shadow: false,
+                        size: 7,
+                        style: 'circle'
+                    }
+                };
+            }
+            //]]>  
+        </script>
+        <style type="text/css">
+            .main-content {
+                padding: 0;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="corpo">
+        <h:form>
+
+            <div class="ui-g dashboard">   
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:commandLink ajax="false" action="#{funcionarioBean.listar()}" immediate="true" style="text-decoration: none">
+                        <div class="ui-g card overview-box overview-box-2">
+                            <div class="ui-g-4 overview-box-icon">
+                                <p:graphicImage name="images/funcionario.png" library="verona-layout" />
+                            </div>
+                            <div class="ui-g-8">
+                                <span class="overview-box-name">FUNCIONÁRIOS</span>
+                                <p>#{funcionarioBean.totalFuncionarios}</p>
+                            </div>
+                        </div>
+                    </p:commandLink>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:commandLink ajax="false" action="#{espelhoPontoBean.listar()}" immediate="true" style="text-decoration: none">
+                        <div class="ui-g card overview-box overview-box-3">
+                            <div class="ui-g-4 overview-box-icon">
+                                <p:graphicImage name="images/icon-paper.png" library="verona-layout" />
+                            </div>
+                            <div class="ui-g-8">
+                                <span class="overview-box-name">ESPELHO PONTO</span>
+                            </div>
+                        </div>
+                    </p:commandLink>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:commandLink ajax="false" action="#{bancoHorasBean.listar()}" immediate="true" style="text-decoration: none">
+                        <div class="ui-g card overview-box overview-box-3">
+                            <div class="ui-g-4 overview-box-icon">
+                                <p:graphicImage name="images/banco.png" library="verona-layout" />
+                            </div>
+                            <div class="ui-g-8">
+                                <span class="overview-box-name">BANCO HORAS EXTRATO</span>
+                            </div>
+                        </div>
+                    </p:commandLink>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:commandLink ajax="false" action="#{afastamentoBean.listar()}" immediate="true" style="text-decoration: none">
+                        <div class="ui-g card overview-box overview-box-3">
+                            <div class="ui-g-4 overview-box-icon">
+                                <p:graphicImage name="images/mala.png" library="verona-layout" />
+                            </div>
+                            <div class="ui-g-8">
+                                <span class="overview-box-name">AFASTAMENTOS</span>
+                                <p>#{afastamentoBean.totalAfastamento}</p>
+                            </div>
+                        </div>
+                    </p:commandLink>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:commandLink ajax="false" action="#{usuarioBean.minhaConta()}"  immediate="true" style="text-decoration: none">
+                        <div class="ui-g card overview-box overview-box-3">
+                            <div class="ui-g-4 overview-box-icon">
+                                <p:graphicImage name="images/usuario.png" library="verona-layout" />
+                            </div>
+                            <div class="ui-g-8">
+                                <span class="overview-box-name">USUARIO</span>
+                                <p>#{usuarioBean.totalUsuarios}</p>
+                            </div>
+                        </div>
+                    </p:commandLink>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-3" >
+                    <p:commandLink ajax="false" action="#{departamentoBean.listar()}"  immediate="true" style="text-decoration: none">
+                        <div class="ui-g card overview-box overview-box-3">
+                            <div class="ui-g-4 overview-box-icon">
+                                <p:graphicImage name="images/departamento.png" library="verona-layout" />
+                            </div>
+                            <div class="ui-g-8">
+                                <span class="overview-box-name">DEPARTAMENTOS</span>
+                                <p>#{departamentoBean.totalDepartamentos}</p>
+                            </div>
+                        </div>
+                    </p:commandLink>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:commandLink ajax="false" action="#{funcaoBean.listar()}"  immediate="true" style="text-decoration: none">
+                        <div class="ui-g card overview-box overview-box-3">
+                            <div class="ui-g-4 overview-box-icon">
+                                <p:graphicImage name="images/funcao.png" library="verona-layout" />
+                            </div>
+                            <div class="ui-g-8">
+                                <span class="overview-box-name">FUNÇÕES</span>
+                                <p>#{funcaoBean.totalFuncao}</p>
+                            </div>
+                        </div>
+                    </p:commandLink>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:commandLink ajax="false" action="#{folhaPeriodoBean.listar()}"  immediate="true" style="text-decoration: none">
+                        <div class="ui-g card overview-box overview-box-3">
+                            <div class="ui-g-4 overview-box-icon">
+                                <p:graphicImage name="images/calendario.png" library="verona-layout" />
+                            </div>
+                            <div class="ui-g-8">
+                                <span class="overview-box-name">FOLHA PERIODO</span>
+                                <p>#{folhaPeriodoBean.totalFolhas}</p>
+                            </div>
+                        </div>
+                    </p:commandLink>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:commandLink ajax="false" action="#{horarioBean.listar()}"  immediate="true" style="text-decoration: none">
+                        <div class="ui-g card overview-box overview-box-3">
+                            <div class="ui-g-4 overview-box-icon">
+                                <p:graphicImage name="images/relogio.png" library="verona-layout" />
+                            </div>
+                            <div class="ui-g-8">
+                                <span class="overview-box-name">HORÁRIOS</span>
+                                <p>#{horarioBean.totalHorario}</p>
+                            </div>
+                        </div>
+                    </p:commandLink>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:commandLink ajax="false" action="#{feriadoBean.listar()}"  immediate="true" style="text-decoration: none">
+                        <div class="ui-g card overview-box overview-box-3">
+                            <div class="ui-g-4 overview-box-icon">
+                                <p:graphicImage name="images/feriado.png" library="verona-layout" />
+                            </div>
+                            <div class="ui-g-8">
+                                <span class="overview-box-name">FERIADOS</span>
+                                <p>#{feriadoBean.totalFeriados}</p>
+                            </div>
+                        </div>
+                    </p:commandLink>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:commandLink ajax="false" action="#{empresaBean.listar()}"  immediate="true" style="text-decoration: none">
+                        <div class="ui-g card overview-box overview-box-3">
+                            <div class="ui-g-4 overview-box-icon">
+                                <p:graphicImage name="images/empresa.png" library="verona-layout" />
+                            </div>
+                            <div class="ui-g-8">
+                                <span class="overview-box-name">EMPRESA</span>
+                                <p>#{empresaBean.totalEmpresa}</p>
+                            </div>
+                        </div>
+                    </p:commandLink>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:commandLink ajax="false" action="#{fileUploadBean.listar()}"  immediate="true" style="text-decoration: none">
+                        <div class="ui-g card overview-box overview-box-3">
+                            <div class="ui-g-4 overview-box-icon">
+                                <p:graphicImage name="images/afd.png" library="verona-layout" />
+                            </div>
+                            <div class="ui-g-8">
+                                <span class="overview-box-name">IMPORTAR REGISTROS AFD</span>
+                            </div>
+                        </div>
+                    </p:commandLink>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:commandLink ajax="false"  action="#{secretariaBean.listar()}" immediate="true" style="text-decoration: none">
+                        <div class="ui-g card overview-box overview-box-3">
+                            <div class="ui-g-4 overview-box-icon">
+                                <p:graphicImage name="images/icon-location.png" library="verona-layout" />
+                            </div>
+                            <div class="ui-g-8">
+                                <span class="overview-box-name">SECRETARIAS</span>
+                            </div>
+                        </div>
+                    </p:commandLink>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:commandLink ajax="false" action="#{ptoEquipamentoBeanHenry.listar()}"  immediate="true" style="text-decoration: none">
+                        <div class="ui-g card overview-box overview-box-3">
+                            <div class="ui-g-4 overview-box-icon">
+                                <p:graphicImage name="images/henry.png" library="verona-layout" />
+                            </div>
+                            <div class="ui-g-8">
+                                <span class="overview-box-name">EQUIPAMENTOS HENRY</span>
+                            </div>
+                        </div>
+                    </p:commandLink>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:commandLink ajax="false"  action="#{ptoEquipamentoBeanElgi.listar()}" immediate="true" style="text-decoration: none">
+                        <div class="ui-g card overview-box overview-box-3">
+                            <div class="ui-g-4 overview-box-icon">
+                                <p:graphicImage name="images/elgin.png" library="verona-layout" />
+                            </div>
+                            <div class="ui-g-8">
+                                <span class="overview-box-name">EQUIPAMENTOS ELGIN</span>
+                            </div>
+                        </div>
+                    </p:commandLink>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:commandLink ajax="false" action="#{justificativaBean.listar()}"  immediate="true" style="text-decoration: none">
+                        <div class="ui-g card overview-box overview-box-3">
+                            <div class="ui-g-4 overview-box-icon">
+                                <p:graphicImage name="images/afd.png" library="verona-layout" />
+                            </div>
+                            <div class="ui-g-8">
+                                <span class="overview-box-name">JUSTIFICATIVAS</span>
+                            </div>
+                        </div>
+                    </p:commandLink>
+                </div>
+
+            </div>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

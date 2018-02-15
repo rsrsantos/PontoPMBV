@@ -1,0 +1,391 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"    
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <title>Espelho Ponto</title> 
+
+        <style type="text/css">
+            .old {
+                background-color: #99ccff !important;
+                background-image: none !important;
+                color: #000000 !important;
+            }
+
+            .falta {
+                background-color: #f18983 !important;
+                background-image: none !important;
+                color: #000000 !important;
+            }
+            .feriado {
+                background-color: #2bde73 !important;
+                background-image: none !important;
+                color: #000000 !important;
+            }
+
+
+        </style>
+
+        <ui:include src="/View/js/calendar-pt.xhtml" />
+
+        <h:form id="form" prependId="true" >
+            <p:growl id="messages"  />
+            <p:panel id="pnlEscala" >
+                <p:panelGrid columns="5"> 
+                    <p:outputLabel for="departamento" value="Departamento ">
+                        <br/>
+                        <p:selectOneMenu filter="true" filterMatchMode="startsWith" id="departamento" value="#{espelhoPontoBean.departamento}" style="width:300px"
+                                         required="true" requiredMessage="Selecio o Departamento" converter="entityConverter">
+                            <f:attribute name="collectionType" value="java.util.ArrayList" />
+                            <f:selectItem itemLabel="Selecione..."  />
+                            <f:selectItems value="#{espelhoPontoBean.listaDepartamento}" var="departamento" 
+                                           itemLabel="#{departamento.descricao}" itemValue="#{departamento}" />
+                        </p:selectOneMenu>
+
+                    </p:outputLabel>
+
+                    <p:outputLabel for="OuPeriodo" value="Periodo">
+                        <br/>
+                        <p:selectOneMenu id="OuPeriodo" value="#{espelhoPontoBean.periodo}" converter="entityConverter" required="true" requiredMessage="Selecione o Periodo" >
+                            <f:attribute name="CollectionTupe" value="java.util.ArrayList"/>
+                            <f:selectItem itemLabel="Selecione..."/>
+                            <f:selectItems value="#{espelhoPontoBean.folhaPeriodos}" var="periodo"
+                                           itemLabel="#{periodo.periodo}" itemValue="#{periodo}"/>
+                        </p:selectOneMenu>
+                    </p:outputLabel>
+
+                    <p:outputLabel>
+                        <br/>
+                        <p:commandButton  title="Carrega o Departamento" id="btnCarregar" action="#{espelhoPontoBean.carregarFuncionarios()}" 
+                                          value="Carregar"   update="pnlList,messages" >
+                        </p:commandButton>
+                    </p:outputLabel>
+
+
+                </p:panelGrid>
+
+            </p:panel>
+
+            <p:spacer width="20" />
+
+
+            <p:panel id="pnlList">
+                <p:panelGrid id="pnlGridlist" columns="1" style="width:100%;" >
+                    <f:facet name="header">
+                        <h:outputText id="outTextList" value="Servidores" />
+                    </f:facet>
+
+                    <p:dataTable id="dtTableUnidade"  reflow="true"  var="item" selection="#{espelhoPontoBean.funcionarioSelecionado}" value="#{espelhoPontoBean.listapordepartamento}" 
+                                 rowKey="#{item.id}" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                 currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
+                                 - Página: {currentPage}/{totalPages} ]" emptyMessage="Nenhum registro encontrado"
+                                 paginator="true" rows="10" style="margin-bottom:20px"
+                                 >
+                        <f:facet name="header">
+                            <p:commandButton rendered="#{espelhoPontoBean.carregado}" icon="fa fw fa-files-o" title="Imprimir Todos" immediate="true" 
+                                             ajax="false" style="float:right;margin:-17px;top:-6px; right:170px;" 
+                                             action="#{espelhoPontoBean.relatorioFrequenciaGeral()}"
+                                             />
+
+                            <p:commandButton id="downloadfaltas"  rendered="#{espelhoPontoBean.carregado}" title="Gera o Arquivo TXT Folha"   icon="fa fw fa-list-ol"  action="#{espelhoPontoBean.exportarFaltas()}"
+                                             style="float:right;margin:-17px;top:-6px; right:90px;"
+                                             onclick="PF('dlgDownload').show()" />
+                            <p:commandButton id="downloadfuncionario" rendered="#{espelhoPontoBean.carregado}" title="Cria o arquivo TXT para incluir no relógio " 
+                                             action="#{espelhoPontoBean.exportarColaboradores()}" icon="fa fw fa-users"
+                                             onclick="PF('dlgDownloadColaborador').show()" 
+                                             style="float:right;margin:-17px;top:-6px; right:9px;"/> 
+                        </f:facet>
+
+                        <p:column selectionMode="single" style="width:16px;text-align:center"/>
+
+                        <p:column headerText="Nome" sortBy="#{item.nome}" filterMatchMode="contains" filterBy="#{item.nome}">
+                            <h:outputText value="#{item.nome}" />
+                        </p:column>
+                        <p:column headerText="Cargo" sortBy="#{item.funcao.descricao}" filterMatchMode="contains" filterBy="#{item.funcao.descricao}">
+                            <h:outputText value="#{item.funcao.descricao}" />
+                        </p:column>
+
+                        <p:column headerText="Ação" >
+                            <p:commandButton  icon=" fa fw fa-file-text"  title="Imprimir Folha Ponto" action="#{espelhoPontoBean.relatorioFrequencia()}"
+                                              ajax="false" onclick="this.form.target = '_blank'"/>
+                        </p:column>
+
+                    </p:dataTable>
+                </p:panelGrid>
+
+                <f:facet name="footer">
+                    <p:outputPanel id="pnlselecionaServidor">
+                        <p:commandButton  rendered="#{espelhoPontoBean.carregado}" process="@form" action="#{espelhoPontoBean.limparLista()}"    update="form:pnlEscalaServidor,pnlTabela,espelhoPonto"  
+                                          icon="ui-icon-search" value="Abrir" oncomplete="PF('dlgEscalaServidor').show()" >
+                        </p:commandButton>
+                    </p:outputPanel>
+                </f:facet>
+
+            </p:panel>
+
+            <p:dialog  header="Espelho de Ponto" widgetVar="dlgEscalaServidor" id="pDlgEscalaServidor" modal="true" width="1240px" height="700px">
+                <p:panel id="pnlEscalaServidor">  
+                    <p:panelGrid columns="9" id="pnlgServidor"  style="width: 100%;">
+                        <p:outputLabel value="Servidor: ">
+                            <br />
+                            <h:outputLabel id="labNome" value="#{espelhoPontoBean.funcionarioSelecionado.nome}" style="font-weight:bold;" />
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Matricula: ">
+                            <br />
+                            <h:outputLabel id="labmatricula" value="#{espelhoPontoBean.funcionarioSelecionado.matricula}" style="font-weight:bold;" />
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Horário: ">
+                            <br />
+                            <h:outputLabel id="labHorario" value="#{espelhoPontoBean.funcionarioSelecionado.horario.nome}" style="font-weight:bold;" />
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Deparramento: ">
+                            <br />
+                            <h:outputLabel id="labdepartamento" value="#{espelhoPontoBean.funcionarioSelecionado.departamento.descricao}" style="font-weight:bold;" />
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Função: ">
+                            <br />
+                            <h:outputLabel id="labfuncao" value="#{espelhoPontoBean.funcionarioSelecionado.funcao.descricao}" style="font-weight:bold;" />
+                        </p:outputLabel>
+                        
+                        <p:outputLabel value="Faltas">
+                            <br/>
+                            <h:outputLabel id="labfaltas" value="#{espelhoPontoBean.resultSetFaltas}" />                            
+                        </p:outputLabel>
+
+                        <p:outputLabel >
+                            <!--<br />-->
+                            <p:commandButton  value="Atualizar" actionListener="#{espelhoPontoBean.recalcular}" update="form:espelhoPonto,labfaltas"  process="@form" >
+
+                            </p:commandButton>
+                        </p:outputLabel>
+                    </p:panelGrid>
+                </p:panel>
+
+                <!--<br />-->
+                <p:panel id="pnlTabela">
+                    <p:dataTable id="espelhoPonto" scrollable="true" scrollHeight="700" editable="true"  var="espelho"  emptyMessage="Nenhum registro encontrado" value="#{espelhoPontoBean.tabelaEspelho}"
+                                 rowStyleClass="#{espelho.entrada01 eq 'Folga' ? 'old' : null} - #{espelho.faltas > '0' ? 'falta' : null}
+                                 - #{espelho.feriado eq true ? 'feriado' : null}
+                                 "                  
+
+                                 >
+
+                        <p:ajax event="rowEdit"  listener="#{espelhoPontoBean.onRowEdit}" update=":form:messages" process="@form"/>
+                        <p:ajax event="rowEditCancel"   listener="#{espelhoPontoBean.onRowCancel}" update=":form:messages" />
+
+
+                        <p:column style="width:10%">
+                            <f:facet name="header">
+                                <h:outputText value="Data" />
+                            </f:facet>
+                            <p:outputLabel value="#{espelho.data}"  />
+                        </p:column>
+
+
+                        <p:column >
+                            <f:facet name="header">
+                                <h:outputText value="Entrada 01"/>
+                            </f:facet>
+                            <p:cellEditor >
+                                <f:facet name="output">
+                                    <h:outputText value="#{espelho.entrada01}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu id="entrada1" value="#{espelho.entrada01}" effect="fold" editable="true">
+                                        <f:selectItems value="#{espelhoPontoBean.listaJustificativas}" var="item" 
+                                                       itemLabel="#{item.descricao}" itemValue="#{item}"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Saida 01"/>
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{espelho.saida01}" >
+                                    </h:outputText>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu id="saida1" value="#{espelho.saida01}" effect="fold" editable="true">
+                                        <f:selectItems value="#{espelhoPontoBean.listaJustificativas}" var="item" 
+                                                       itemLabel="#{item.descricao}" itemValue="#{item}"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Entrada 02"/>
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{espelho.entrada02}" >
+                                    </h:outputText>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu id="entrada2" value="#{espelho.entrada02}" effect="fold" editable="true">
+                                        <f:selectItems value="#{espelhoPontoBean.listaJustificativas}" var="item" 
+                                                       itemLabel="#{item.descricao}" itemValue="#{item}"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Saida 02"/>
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{espelho.saida02}" >
+                                    </h:outputText>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu id="saida2" value="#{espelho.saida02}" effect="fold" editable="true">
+                                        <f:selectItems value="#{espelhoPontoBean.listaJustificativas}" var="item" 
+                                                       itemLabel="#{item.descricao}" itemValue="#{item}"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column id="colunTrabalhadas">
+                            <f:facet name="header">
+                                <h:outputText value="Trabalhadas"/>
+                            </f:facet>
+                            <p:outputLabel id="labTrabalhadas" value="#{espelho.trabalhadas}" style="font-weight:bold;" />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Extras" style="font-weight:bold; color: #0099e5;"/>
+                            </f:facet>
+                            <p:outputLabel value="#{espelho.extras}" style="font-weight:bold; color: #0099e5;" />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel  value="Faltas" style="font-weight:bold; color: #cc0812;" />
+                            </f:facet>
+                            <p:outputLabel value="#{espelho.faltas}" style="font-weight:bold; color: #cc0812;" />
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Observação" style="font-weight:bold; color: #f89406;"/>
+                            </f:facet>
+                            <p:cellEditor >
+                                <f:facet name="output">
+                                    <h:outputText value="#{espelho.observacao}" style="font-weight:bold; color: #252525;" >
+                                    </h:outputText>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText required="true" requiredMessage="Justifique a Alteração" id="modelInput4" value="#{espelho.observacao}" style="font-weight:bold; color: #f89406;">
+                                    </p:inputText>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Saldo BH Positivo" style="font-weight:bold; color: #00c300;"/>
+                            </f:facet>
+                            <h:outputText value="#{espelho.saldo_positivo}" style="font-weight:bold; color: #00c300;" />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Saldo BH Negativo" style="font-weight:bold; color: #f54243;"/>
+                            </f:facet>
+                            <h:outputText value="#{espelho.saldo_negativo}" />
+                        </p:column>
+
+                        <p:column rendered="#{espelhoPontoBean.carregaEditar}"  style="width:32px">
+                            <f:facet name="header">
+                                <h:outputText value="Editar" />
+                            </f:facet>
+                            <p:rowEditor  />
+                        </p:column>
+
+
+                        <p:column rendered="#{espelhoPontoBean.carregaEditar}" >
+                            <f:facet name="header">
+                                <h:outputText value="Mover" />
+                            </f:facet>
+
+                            <p:commandButton icon=" fa fw fa-arrows" action="#{espelhoPontoBean.MoverBatidas(espelho)}" onstart="PF('dlgMoverBatidas').show();" update="form:pnlMovBatida" process="@this" />
+
+                        </p:column>
+
+
+
+                    </p:dataTable>
+
+                </p:panel>
+            </p:dialog>
+
+            <p:dialog header="Mover Batidas" widgetVar="dlgMoverBatidas" id="pDlgMoverBatidas" modal="true" width="472px" height="190px">
+                <p:panel id="pnlMovBatida">
+
+                    <p:dataTable id="tblEditarBatida" var="espelhoeditar" value="#{espelhoPontoBean.listaMoverBatidas}" draggableRows="true">
+                        <p:ajax event="rowReorder" listener="#{espelhoPontoBean.onRowReorder}" update=":form:tblEditarBatida" 
+                                process="@none" partialSubmit="true" />
+                        <f:facet name="header">
+                            Batidas
+                        </f:facet>
+                        <p:outputLabel value="Entrada 01" />
+                        <p:column headerText="Hr. Original">
+                            <h:outputText value="#{espelhoeditar}" />
+                        </p:column>
+
+
+                        <p:column headerText="Hr. Atual">
+                        </p:column>
+
+                        <p:column headerText="Observação">
+                        </p:column>
+
+                        <p:column headerText="Ações">
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+            </p:dialog>
+
+            <p:dialog widgetVar="dlgDownload" modal="true" draggable="false" closable="true" resizable="false" header="Download de Arquivo" showHeader="true">
+
+                <p:panel id="pnlDownload">
+                    <p:commandButton value="Download" ajax="false" onclick="PF('dlgDownload').hide();"  icon="ui-icon-arrowthick-1-s">
+                        <p:fileDownload value="#{espelhoPontoBean.stream}" />
+                    </p:commandButton>
+                </p:panel>
+            </p:dialog>
+
+            <p:dialog widgetVar="dlgDownloadColaborador" modal="true" draggable="false" closable="true" resizable="false" header="Download de Colaboradores" 
+                      showHeader="true">
+                <p:panel id="pnlDownloadColaborador">
+                    <p:commandButton value="Download Colaborador" ajax="false" onclick="PF('dlgDownloadColaborador').hide();"  icon="ui-icon-arrowthick-1-s">
+                        <p:fileDownload value="#{espelhoPontoBean.streamcolaborador}" />
+                    </p:commandButton>
+                </p:panel>
+            </p:dialog>
+
+        </h:form>
+
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <p:graphicImage library="verona-layout" name="/images/preloader.gif" />
+        </p:dialog>
+
+    </ui:define>
+
+</ui:composition>
+

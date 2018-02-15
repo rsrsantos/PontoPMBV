@@ -1,0 +1,181 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"    
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <title>Espelho Ponto</title> 
+
+        <h:form id="formRelatorio"
+                style="padding-top:10px;">
+
+
+            <p:dataTable 	
+                          var="r"
+                          emptyMessage="#{bundle.nenhum_resultado}"
+                          id="tabela">
+
+<!--                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.data}"/>
+                    </f:facet>
+
+                    <h:outputText value="#{r.data.time}">
+                        <f:convertDateTime timeZone=""
+                                           locale="pt"
+                                           pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p:column>-->
+
+<!--                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.dia_semana}"/>
+                    </f:facet>
+
+                    <h:outputText 	value="#{r.data.time}">
+                        <f:convertDateTime timeZone=""
+                                           locale="#{intercionalizacaoBean.locale}"
+                                           pattern="EEEEEE" />
+                    </h:outputText>
+
+                </p:column>-->
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="entrada 01"/>
+                    </f:facet>
+
+                    <h:outputText >
+<!--                        <f:convertDateTime timeZone="#{intercionalizacaoBean.timeZone}"
+                                           locale="#{intercionalizacaoBean.locale}"
+                                           pattern="HH:mm" />-->
+                    </h:outputText>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="saida 01"/>
+                    </f:facet>
+
+                    <h:outputText >
+<!--                        <f:convertDateTime timeZone="#{intercionalizacaoBean.timeZone}"
+                                           locale="#{intercionalizacaoBean.locale}"
+                                           pattern="HH:mm" />-->
+                    </h:outputText>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="entrada 02"/>
+                    </f:facet>
+
+                    <h:outputText >
+<!--                        <f:convertDateTime timeZone="#{intercionalizacaoBean.timeZone}"
+                                           locale="#{intercionalizacaoBean.locale}"
+                                           pattern="HH:mm" />-->
+                    </h:outputText>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="saida 02"/>
+                    </f:facet>
+
+                    <h:outputText >
+<!--                        <f:convertDateTime timeZone="#{intercionalizacaoBean.timeZone}"
+                                           locale="#{intercionalizacaoBean.locale}"
+                                           pattern="HH:mm" />-->
+                    </h:outputText>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Trabalhadas"/>
+                    </f:facet>
+
+                    <h:outputText >
+<!--                        <f:convertDateTime 	timeZone="#{intercionalizacaoBean.timeZone}"
+                                            locale="#{intercionalizacaoBean.locale}"
+                                            pattern="HH:mm" />-->
+                    </h:outputText>
+                </p:column>
+<p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Faltas"/>
+                    </f:facet>
+
+                    <h:outputText >
+<!--                        <f:convertDateTime 	timeZone="#{intercionalizacaoBean.timeZone}"
+                                            locale="#{intercionalizacaoBean.locale}"
+                                            pattern="HH:mm" />-->
+                    </h:outputText>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="ocorrência"/>
+                    </f:facet>
+
+                    <h:outputText >
+<!--                        <f:convertDateTime 	timeZone="#{intercionalizacaoBean.timeZone}"
+                                            locale="#{intercionalizacaoBean.locale}"
+                                            pattern="HH:mm" />-->
+                    </h:outputText>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="observação"/>
+                    </f:facet>
+
+                    <h:outputText  />
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+
+
+
+        <script type="text/javascript">
+            PrimeFaces.locales['pt_BR'] = {
+                closeText: 'Fechar',
+                prevText: 'Anterior',
+                nextText: 'Próximo',
+                currentText: 'Começo',
+                monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
+                    'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro',
+                    'Novembro', 'Dezembro'],
+                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+                    'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta',
+                    'Sexta', 'Sábado'],
+                dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+                weekHeader: 'Semana',
+                firstDay: 0,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Só Horas',
+                timeText: 'Tempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                ampm: false,
+                month: 'Mês',
+                week: 'Semana',
+                day: 'Dia',
+                allDayText: 'Todo o Dia'
+            };
+        </script>
+        <style type="text/css">
+            .value {
+                width: 1000px;
+            }
+        </style>
+
+    </ui:define>
+
+</ui:composition>
+

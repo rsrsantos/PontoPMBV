@@ -1,0 +1,85 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="corpo">      
+        <title>Justificativas</title>
+
+        <ui:include src="/View/js/calendar-pt.xhtml" />   
+
+        <h:form id="up">
+
+            <p:tabView>
+                <p:tab title="Justificativas">
+
+                    <p:growl id="messages" showDetail="true" />
+
+                    <p:commandButton value="Novo" icon="ui-icon-circle-plus" action="#{justificativaBean.novaJustificativa(justificativa)}" ajax="false" />
+                    <br></br> <br></br>
+
+                    <p:separator/>
+
+                    <h:panelGrid columns="4" cellpadding="10">
+
+                        <p:dataTable id="tbl" var="justificativa" value="#{justificativaBean.justificativas}"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                     currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
+                                     - Página: {currentPage}/{totalPages} ]"
+                                     paginator="true" rows="7" style="margin-bottom:20px">
+
+                            <f:facet name="header">
+                                JUSTIFICATIVAS
+                            </f:facet>
+                            <f:facet name="{Exporters}">
+                                <h:commandLink>
+                                    <p:graphicImage value="/images/excel.png" width="24"  />
+                                    <p:dataExporter type="xls" target="tbl" fileName="departamentos"  />
+                                </h:commandLink>
+
+
+                            </f:facet>
+
+                            <p:column headerText="ID" style="width:120px" filterBy="#{justificativa.id}" sortBy="#{justificativa.id}" filterMatchMode="contains">
+                                <h:outputText id="id" value="#{justificativa.id}"  />
+                            </p:column>
+
+                            <p:column headerText="Nome" filterBy="#{justificativa.nome}" sortBy="#{justificativa.nome}" filterMatchMode="contains">
+                                <h:outputText  id="nome" value="#{justificativa.nome}" />
+                            </p:column>
+
+                            <p:column headerText="Descrição" filterBy="#{justificativa.descricao}" sortBy="#{justificativa.descricao}" filterMatchMode="contains">
+                                <h:outputText  id="descricao" value="#{justificativa.descricao}" />
+                            </p:column>
+
+                            <p:column headerText="Ação"  style="width:80px">
+                                <p:commandButton icon="fa fw fa-edit" ajax="false" action="#{justificativaBean.editar(justificativa)}"/>
+                                <p:commandButton ajax="false" icon="fa fw fa-trash-o" action="#{justificativaBean.excluir(justificativa)}"   >
+                                </p:commandButton>
+                                <p:confirmDialog  global="true" showEffect="fade" hideEffect="fade">
+                                    <p:commandButton ajax="false"  value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"  />
+                                    <p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                </p:confirmDialog>
+                            </p:column>
+
+                        </p:dataTable >
+
+                    </h:panelGrid > 
+
+                    <p:separator/>
+
+                </p:tab>
+
+            </p:tabView>
+
+        </h:form>    
+
+
+    </ui:define>
+
+
+</ui:composition>
+

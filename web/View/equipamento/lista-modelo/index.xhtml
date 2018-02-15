@@ -1,0 +1,151 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="corpo">              
+        <title>Modelos Equipamentos</title>
+
+        <title>Sistema de Ponto</title>  
+        <h:form>
+            <p:growl autoUpdate="true" />
+
+            <p:tabView>
+                <p:tab title="Modelo Equipamento" >
+                    <p:commandButton value="Novo" action="/View/equipamento/cadastrar-modelo/index"  icon="ui-icon-circle-plus" ajax="false" />
+                    <br></br> <br></br>
+
+                    <h:panelGrid columns="4" cellpadding="10">
+                        <div class="ui-g-12">
+                            <div class="card card-w-title">
+                                <p:dataTable id="tbl" var="modelo" value="#{modeloBean.modelos}"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                             currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
+                                             - Página: {currentPage}/{totalPages} ]"
+                                             paginator="true" rows="5" style="margin-bottom:20px">
+
+                                    <f:facet name="header">
+                                        MODELOS 
+                                    </f:facet>
+                                    <f:facet name="{Exporters}">
+                                        <h:commandLink>
+                                            <p:graphicImage value="/images/excel.png" width="24"  />
+                                            <p:dataExporter type="xls" target="tbl" fileName="Equipamentos"  />
+                                        </h:commandLink>
+
+
+                                    </f:facet>
+
+
+                                    <p:column headerText="ID"  style="width:35px">
+                                        <h:outputText id="id" value="#{modelo.id}"  />
+                                    </p:column>
+
+                                    <p:column headerText="Descrição">
+                                        <h:outputText  id="descricao" value="#{modelo.descricao}" />
+                                    </p:column>
+
+                                    <p:column headerText="Modelo">
+                                        <h:outputText  id="modelo" value="#{modelo.modelo}" />
+                                    </p:column>
+
+                                    <p:column headerText="Ação"  style="width:80px">
+                                        <p:commandButton icon="fa fw fa-edit" ajax="false" action="#{modeloBean.editar(modelo)}"/>
+                                        <p:commandButton ajax="false  " icon="fa fw fa-trash-o" action="#{modeloBean.excluir(modelo)}"  />
+                                    </p:column>
+
+
+
+
+
+                                </p:dataTable >
+
+                            </div>
+                        </div>
+
+                    </h:panelGrid > 
+
+
+
+
+
+                    <p:separator/>
+
+
+
+                </p:tab>
+
+                <p:tab title="Tipo de Corte" >
+                    <p:commandButton value="Novo" action="/View/equipamento/cadastrar-tipoCorte/index"  icon="ui-icon-circle-plus" ajax="false" />
+                    <br></br> <br></br>
+
+                    <h:panelGrid columns="4" cellpadding="10">
+                        <div class="ui-g-12">
+                            <div class="card card-w-title">
+                                <p:dataTable id="tb2" var="corte" value="#{tipoCorteBean.tipoCortes}"
+                                             currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
+                                             - Página: {currentPage}/{totalPages} ]"
+                                             paginator="true" rows="5" style="margin-bottom:20px">
+
+                                    <f:facet name="header">
+                                        Tipo Corte 
+                                    </f:facet>
+
+                                    <p:column headerText="ID"  style="width:35px">
+                                        <h:outputText id="id" value="#{corte.id}"  />
+                                    </p:column>
+
+                                    <p:column headerText="Descrição">
+                                        <h:outputText  id="descricao" value="#{corte.descricao}" />
+                                    </p:column>
+
+                                    <p:column headerText="Modelo">
+                                        <h:outputText  id="modelo" value="#{corte.tipocorte}" />
+                                    </p:column>
+
+                                    <p:column headerText="Ação"  style="width:80px">
+                                        <p:commandButton icon="fa fw fa-edit" ajax="false" action="#{tipoCorteBean.editar(corte)}"/>
+
+                                        <p:commandButton ajax="false  " icon="fa fw fa-trash-o" action="#{tipoCorteBean.excluir(corte)}"  />
+                                    </p:column>
+
+
+
+
+
+                                </p:dataTable >
+
+                            </div>
+                        </div>
+
+
+                    </h:panelGrid > 
+
+
+
+
+
+                    <p:separator/>
+
+
+
+                </p:tab>
+
+
+
+            </p:tabView>
+
+
+
+        </h:form>               
+
+
+
+    </ui:define>
+
+
+
+</ui:composition>

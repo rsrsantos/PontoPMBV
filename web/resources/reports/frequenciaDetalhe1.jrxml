@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="frequenciaDetalhe1" language="groovy" pageWidth="500" pageHeight="842" columnWidth="500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f8ae906d-f34a-4191-a9c9-9fc15969fef0">
+	<property name="ireport.zoom" value="1.5026296018031553"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="gFuncionarioId" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="gIdPeriodo" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+
+	esp.bat_entrada_01 AS entrada_01,
+	esp.bat_saida_01 AS saida_01,
+	esp.bat_entrada_02 AS entrada_02,
+	esp.bat_saida_02 AS saida_02,
+	esp.data AS data_batida,
+	esp.trabalhadas AS horas_trabalhadas,
+          esp.faltas AS faltas_dia,
+          esp.saldo_positivo AS saldo_dia_positivo,
+          esp.saldo_negativo AS saldo_dia_negativo,
+          esp.totalbancohoras AS saldo_banco_horas,
+          esp.totalfaltas AS total_faltas
+
+
+
+from espelhoponto esp
+
+WHERE esp.funcionario_id = $P{gFuncionarioId} AND
+   esp.folhaperiodo_id = $P{gIdPeriodo}
+
+ORDER BY data_batida;]]>
+	</queryString>
+	<field name="entrada_01" class="java.lang.String"/>
+	<field name="saida_01" class="java.lang.String"/>
+	<field name="entrada_02" class="java.lang.String"/>
+	<field name="saida_02" class="java.lang.String"/>
+	<field name="data_batida" class="java.lang.String"/>
+	<field name="horas_trabalhadas" class="java.lang.String"/>
+	<field name="faltas_dia" class="java.lang.String"/>
+	<field name="saldo_dia_positivo" class="java.lang.String"/>
+	<field name="saldo_dia_negativo" class="java.lang.String"/>
+	<field name="saldo_banco_horas" class="java.lang.String"/>
+	<field name="total_faltas" class="java.lang.String"/>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<staticText>
+				<reportElement x="301" y="0" width="100" height="17" uuid="ec4f11ba-a761-49b3-9306-901ea8106fd6"/>
+				<text><![CDATA[TESTE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="215" y="0" width="44" height="18" uuid="926cb9f1-959f-4239-8d08-c778547b692c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{saida_02}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="96" height="18" uuid="af8f3e27-4720-45a0-9198-af11c00ed820"/>
+				<textFieldExpression><![CDATA[$F{data_batida}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="0" width="37" height="18" uuid="872cbd07-6c9b-439d-90d0-7fea567f611b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{entrada_01}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="176" y="0" width="39" height="18" uuid="4789a536-f7cc-47c1-af8f-58d156b2fecf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{entrada_02}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="139" y="0" width="38" height="18" uuid="12e1e8d3-ef37-4c28-a604-4f35141482c3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{saida_01}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="17" width="414" height="1" uuid="03ad1bb8-d987-43d0-ac20-31802cc8df28"/>
+			</line>
+			<textField>
+				<reportElement x="278" y="0" width="34" height="17" uuid="ac46cce7-cec6-4315-8088-b5bc5e4a4917"/>
+				<textFieldExpression><![CDATA[$F{faltas_dia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="312" y="0" width="34" height="17" uuid="c61c2a83-f540-4a42-8e39-734d169dc691"/>
+				<textFieldExpression><![CDATA[$F{saldo_dia_positivo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="346" y="0" width="34" height="17" uuid="ddfd6fd6-ca36-4b4d-8ad0-0431fba39cf2"/>
+				<textFieldExpression><![CDATA[$F{saldo_dia_negativo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="34" height="17" uuid="0234a136-5d2c-448c-b377-5b819175d597"/>
+				<textFieldExpression><![CDATA[$F{saldo_banco_horas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

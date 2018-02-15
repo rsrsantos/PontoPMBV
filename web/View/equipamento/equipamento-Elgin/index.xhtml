@@ -1,0 +1,106 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="corpo">              
+        <title>Equipamentos Elgin</title>
+
+        <title>Sistema de Ponto</title>  
+        <h:form>
+            <p:growl autoUpdate="true"  />
+
+            <p:tabView>
+                <p:tab  title="Equipamento Elgin">
+                    <p:commandButton value="Novo" icon="ui-icon-circle-plus" action="/View/equipamento/cadastrar-equipamentoElgin/index" ajax="false" />
+                    <br></br>
+
+                    <h:panelGrid columns="4" cellpadding="10">
+                        <div class="ui-g-12">
+                            <div class="card card-w-title">
+                                <p:dataTable id="tbl" var="ptoequipamentoelgin" value="#{ptoEquipamentoBeanElgi.ptoEquipamentosElgins}"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                             currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
+                                             - Página: {currentPage}/{totalPages} ]"
+                                             paginator="true" rows="5" style="margin-bottom:20px">
+
+                                    <f:facet name="header">
+                                        Equipamentos
+
+                                    </f:facet> 
+                                    <f:facet name="{Exporters}">
+                                        <h:commandLink>
+                                            <p:graphicImage value="/images/excel.png" width="24"  />
+                                            <p:dataExporter type="xls" target="tbl" fileName="Equipamentos"  />
+                                        </h:commandLink>
+
+
+                                    </f:facet>
+
+
+                                    <p:column headerText="Equipamento" filterBy="#{ptoequipamento.descricao}" sortBy="#{ptoequipamento.descricao}" filterMatchMode="contains">
+                                        <h:outputText id="equipament" value="#{ptoequipamentoelgin.descricaoel}"  />
+                                    </p:column>
+
+                                    <p:column headerText="IP" filterBy="#{ptoequipamento.descricao}" sortBy="#{ptoequipamento.descricao}" filterMatchMode="contains">
+                                        <h:outputText  id="ips" value="#{ptoequipamentoelgin.ipel}" />
+                                    </p:column>
+
+                                    <p:column headerText="Modelo" filterBy="#{ptoequipamento.descricao}" sortBy="#{ptoequipamento.descricao}" filterMatchMode="contains">
+                                        <h:outputText  id="modelos" value="#{ptoequipamentoelgin.modeloel}" />
+
+                                    </p:column>
+
+                                    <p:column headerText="Última Coleta" filterBy="#{ptoequipamento.descricao}" sortBy="#{ptoequipamento.descricao}" filterMatchMode="contains">
+                                        <h:outputText  id="datafim" value="#{ptoequipamentoelgin.datafim}" />
+
+                                    </p:column>
+
+
+                                    <p:column headerText="Ação" style="width: 150px" >
+                                        <p:commandButton icon="fa fw fa-edit" ajax="false" action="#{ptoEquipamentoBeanElgi.editar(ptoequipamentoelgin)}"/>
+
+                                        <p:commandButton ajax="false  " icon="fa fw fa-trash-o" action="#{ptoEquipamentoBeanElgi.excluir(ptoequipamentoelgin)}"  >
+                                            <p:confirm header="Confirmação" message="Tem Certeza?" icon="ui-icon-alert" />
+                                        </p:commandButton>
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                        </p:confirmDialog>
+
+                                        <p:commandButton ajax="false"  icon="fa fw fa-clock-o" action="#{repZPM.ajustahora(ptoequipamentoelgin)}"   />
+
+                                        <p:commandButton     ajax="false"  icon="fa fw fa-download" action="#{repZPM.ColetarManual(ptoequipamentoelgin)}"   />
+                                    </p:column>
+
+
+                                </p:dataTable >
+
+                            </div>
+                        </div>
+                    </h:panelGrid > 
+
+
+                    <p:separator/>
+
+
+
+                </p:tab>
+
+
+            </p:tabView>
+
+
+
+        </h:form>               
+
+
+
+    </ui:define>
+
+
+
+</ui:composition>

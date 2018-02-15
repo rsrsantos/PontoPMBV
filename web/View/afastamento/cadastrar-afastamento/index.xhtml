@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <title>Cadastrar Afastamento</title>  
+        <h2>Afastamento</h2>
+        <p:growl autoUpdate="true" id="cadastrar" />
+        <ui:include src="/View/js/calendar-pt.xhtml" />
+        <h:form >
+            <p:tabView >
+
+                <p:tab title="Dados Genéricos"  >
+
+                    <p:panelGrid columns="2" id="pnlGridLicenca" styleClass="ui-panelgrid-blank form-group">
+                        <p:outputLabel value="ID:">
+                            <br />
+                            <p:inputText id="id" value="#{afastamentoBean.afastamento.id}" size="10" />
+                        </p:outputLabel>
+                        <p:outputLabel id="outdescricao" for="iptdescricao" value="Descricao">
+                            <br />
+                            <p:inputText id="iptdescricao" value="#{afastamentoBean.afastamento.descricao}" style="width: 330px" />
+                        </p:outputLabel>
+
+                        <p:outputLabel for="outLabelServidor"  value="Funcionário" >
+                            <br />
+                            <p:selectCheckboxMenu id="outLabelServidor" label="Funcionários" filter="true" filterMatchMode="startsWith"  
+                                                  value="#{afastamentoBean.afastamento.funcionario}" style="width:300px" 
+                                                  required="true" requiredMessage="Funcionário" converter="entityConverter">
+                                <f:selectItems value="#{afastamentoBean.funcionarios}" var="funcionarios" 
+                                               itemLabel="#{funcionarios.nome}" itemValue="#{funcionarios}" />
+                            </p:selectCheckboxMenu>
+                        </p:outputLabel>
+
+                        <p:outputLabel id="outLabelJustificativa" for="iptSlctMenuJustificativa" value="Justificativa">
+                            <br />
+                            <p:selectOneMenu   filter="true" filterMatchMode="startsWith" id="iptSlctMenuJustificativa" value="#{afastamentoBean.afastamento.justificativa}" style="width:300px" 
+                                               required="true" requiredMessage="Justificativa" converter="entityConverter" >
+                                <f:attribute name="collectionType" value="java.util.ArrayList" />
+                                <f:selectItem itemLabel="Selecione a Justificativa"  />
+                                <f:selectItems value="#{afastamentoBean.justificativas}" var="justificas" 
+                                               itemLabel="#{justificas.nome}" itemValue="#{justificas}" />
+                            </p:selectOneMenu>
+                        </p:outputLabel>
+
+                        <p:outputLabel id="outLabelInicio" for="iptInicio" value="Inicio">
+                            <br />
+                            <p:calendar id="iptInicio" required="true" requiredMessage="Data Inicio"   value="#{afastamentoBean.afastamento.data_inicio}"  showOn="button" pattern="dd/MM/yyyy" mask="true"
+                                        timeZone="America/Boa_Vista" />
+                        </p:outputLabel>
+                        <p:outputLabel id="outLabelFim" for="iptFim" value="Fim">
+                            <br />
+                            <p:calendar id="iptFim" required="true" requiredMessage="Data Fim"   value="#{afastamentoBean.afastamento.data_fim}"  showOn="button" pattern="dd/MM/yyyy" mask="true"
+                                        timeZone="America/Boa_Vista" />
+                        </p:outputLabel>
+
+                    </p:panelGrid>
+
+                </p:tab>
+
+            </p:tabView>
+            <br/>
+            <p:panel>
+                <p:outputLabel value="Última Alteração : ">
+                    <p:outputLabel value="#{afastamentoBean.afastamento.ultima_alteracao}" />
+                </p:outputLabel>
+                <br/><br/>
+                <p:outputLabel value="Usuário : ">
+                    <p:outputLabel value="#{afastamentoBean.afastamento.usuario.funcionario.nome}" />
+                </p:outputLabel>
+
+            </p:panel>
+            <br></br>
+            <p:panel>
+                <h:panelGrid width="100%" style="text-align:center">
+                    <p:commandButton   value="Salvar" style="height: 40px; width: 1300px;align-content: center;" icon="fa fa-fw fa-save" action="#{afastamentoBean.gravarAfastamento()}"  ajax="false"/>
+                </h:panelGrid>
+            </p:panel>
+            <br></br>
+
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

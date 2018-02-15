@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      >
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <link rel="stylesheet" href="css/style.css"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        
+        <title><ui:insert name="title">PontoPMBV</ui:insert></title>
+        <h:outputScript name="js/nanoscroller.js" library="verona-layout" />
+        <h:outputScript name="js/layout.js" library="verona-layout" />
+        <ui:include src="js/calendar-pt.xhtml" />
+        <ui:insert name="head"/>
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                        m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-93461466-1', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+    </h:head>
+
+    <h:body styleClass="main-body">
+        <div class="layout-wrapper layout-menu-horizontal">
+            <ui:include src="./topbar.xhtml" />
+
+            <div class="layout-content">
+                <ui:insert name="corpo"/>
+            </div>
+
+            <ui:include src="./footer.xhtml" />
+        </div>
+
+        <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+        <p:dialog  header="Carregando..." widgetVar="statusDialog" modal="true" draggable="false" 
+                   closable="false" resizable="false" showHeader="false">
+            <p:graphicImage library="verona-layout" name="/images/Wedges.gif" />
+            <br/>
+            <p:outputLabel value="Carregando..." />
+        </p:dialog>
+
+
+        <h:outputStylesheet name="css/nanoscroller.css" library="verona-layout" />
+        <h:outputStylesheet name="css/layout-teal.css" library="verona-layout" />
+    </h:body>
+
+</html>

@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <title>Cadastrar Feriado</title>  
+        <p:growl autoUpdate="true" id="cadastrar" />
+        <ui:include src="/View/js/calendar-pt.xhtml" />
+        <h:form >
+            <h2>Feriado</h2>
+            <p:tabView >
+
+                <p:tab title="Dados Genéricos"  >
+
+                    <p:panelGrid id="painelFeriado" columns="8" styleClass="ui-panelgrid-blank form-group"  >
+
+                        <p:outputLabel value="ID"/>
+                        <p:inputText  id="id" value="#{feriadoBean.feriado.id}" size="10"   />
+
+                        <p:outputLabel value="Nome:  "/>
+                        <p:inputText required="true" value="#{feriadoBean.feriado.nome}" requiredMessage="Preencha o Nome" id="nome" size="35" />
+
+                        <p:outputLabel for="departamento" value="Departamento"/>
+                        <p:selectCheckboxMenu label=""  filter="true" filterMatchMode="startsWith" id="departamento" 
+                                              value="#{feriadoBean.feriado.departamento}" style="width:300px" 
+                                              required="true" requiredMessage="Selecio o Departamento" converter="entityConverter">
+                            <f:attribute name="collectionType" value="java.util.ArrayList" />
+                            <f:selectItems value="#{feriadoBean.departamentos}" var="departamento" 
+                                           itemLabel="#{departamento.descricao}" itemValue="#{departamento}" />
+                        </p:selectCheckboxMenu>
+
+
+                        <p:outputLabel  for="dataferiado" value="Data  ">
+                            <p:calendar id="dataferiado" required="true" requiredMessage="Data"  value="#{feriadoBean.feriado.dataferiado}"  showOn="button" pattern="dd/MM/yyyy" mask="true"
+                                        timeZone="America/Boa_Vista" />
+                        </p:outputLabel>
+
+                    </p:panelGrid>   
+
+                </p:tab>
+
+
+            </p:tabView>
+            <br></br>
+            <h:panelGrid width="100%" style="text-align:center">
+                <p:commandButton   value="Salvar" style="height: 40px; width: 1300px;align-content: center;" icon="fa fa-fw fa-save" action="#{feriadoBean.gravarFeriado()}"    ajax="false"/>
+            </h:panelGrid>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

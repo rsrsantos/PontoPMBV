@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="frequenciaDetalhe" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="07bcc158-cfbb-412a-8edb-d29b3ce0eae2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="gFuncionarioId" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="gIdPeriodo" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+
+	esp.bat_entrada_01 AS entrada_01,
+	esp.bat_saida_01 AS saida_01,
+	esp.bat_entrada_02 AS entrada_02,
+	esp.bat_saida_02 AS saida_02,
+	esp.data AS data_batida
+
+
+
+
+
+
+from espelhoponto esp
+
+WHERE esp.funcionario_id = $P{gFuncionarioId} AND
+   esp.folhaperiodo_id = $P{gIdPeriodo}
+
+ORDER BY data_batida;]]>
+	</queryString>
+	<field name="entrada_01" class="java.lang.String"/>
+	<field name="saida_01" class="java.lang.String"/>
+	<field name="entrada_02" class="java.lang.String"/>
+	<field name="saida_02" class="java.lang.String"/>
+	<field name="data_batida" class="java.lang.String"/>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="201" y="0" width="51" height="17" uuid="e7889b39-8f6a-43ef-aedc-824d70586544"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{entrada_02}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="264" y="0" width="53" height="17" uuid="4e34740b-5185-488e-8473-8f35d6f75693"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{saida_02}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="16" width="548" height="1" uuid="4fddc7b9-6697-4401-a965-22527cb8eb47"/>
+			</line>
+			<textField>
+				<reportElement x="0" y="0" width="74" height="16" uuid="b43e495f-18bc-466c-bbbe-9242aab7ec3a"/>
+				<textFieldExpression><![CDATA[$F{data_batida}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="-1" width="548" height="1" uuid="4474c892-5a49-4a66-961b-2766a91dd3b3"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="74" y="0" width="50" height="17" uuid="4b8e4f63-d155-4c73-b15c-d700b34a66b8"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{entrada_01}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="152" y="0" width="49" height="17" uuid="4f3ef003-8dfa-4046-b50b-5191323d72c3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{saida_01}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

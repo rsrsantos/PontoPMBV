@@ -1,0 +1,67 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pv="http://primefaces.org/verona">
+
+    <div class="layout-menu-wrapper">
+        <div class="nano">
+            <div class="nano-content sidebar-scroll-content">
+                <div class="layout-menu-container">
+                    <h:form >
+                        <pv:menu>
+                            <p:menuitem id="home" value="HOME" icon="fa fa-home" outcome="#{usuarioBean.getHome()}"/>
+                            <p:submenu label="CADASTRO" icon="fa fa-plus"  >
+                                <p:menuitem value="Empresa" icon="icon-users" url="/View/empresa/lista-empresa/"  />
+                                <p:menuitem value="Funcionário " icon="ui-icon-person" url="/View/funcionario/lista-funcionario/" />
+                                <p:menuitem value="Modelo/Tipo Corte " icon="icon-user" url="/View/equipamento/lista-modelo/" />
+                                <p:menuitem value="Secretaria" icon="icon-user" url="/View/secretaria/lista-secretaria/" />
+                                <p:menuitem value="Departamento " icon="icon-user" url="/View/departamento/lista-departamento/" />
+                                <p:menuitem value="Função " icon="icon-user" url="/View/funcao/lista-funcao/" />
+                                <p:menuitem value="Horário " icon="ui-icon-clock" url="/View/horario/lista-horario/"  />
+                                <p:menuitem value="Justificativa " icon="icon-user"   url="/View/justificativa/lista-justificativa/" />  
+                                <p:menuitem value="Feriado" icon="icon-user" url="/View/feriado/lista-feriado/" />
+                                <p:submenu  label="Escala" icon="icon-user"  >
+                                    <p:menuitem value="Escala Mensal" url="/View/escala-trabalho/lista-escala/" />
+                                </p:submenu>
+
+                            </p:submenu>
+                            <p:submenu label="COMUNICAÇÃO" icon=" fa fa-wechat"   >
+                                <p:menuitem value="Equip. Henry " icon="icon-user" action="#{coletaHenry1.verificaColetaRelogio()}" url="/View/equipamento/equipamento-Henry/" />
+                                <p:menuitem value="Equip. Elgin " icon="icon-user" url="/View/equipamento/equipamento-Elgin/" />
+                                <p:menuitem value="Enviar Funcionário " icon="icon-user" url="/View/equipamento/enviar-funcionario/" />
+                                <p:menuitem value="Excluir Funcionário " icon="icon-user" url="/View/equipamento/excluir-funcionario/" />
+                                <p:menuitem value="Enviar/Receber  Biometria " icon="icon-user" url="/View/equipamento/receber-biometria/" />
+                                <p:menuitem value="Importar Registros " icon="icon-user" url="/View/equipamento/importar-arquivo/" />
+                                <p:menuitem value="Exportar Funcionários" icon="icon-user" url="/View/equipamento/exportar-funcionario/" />
+                            </p:submenu>
+                            <p:submenu label="MOVIMENTAÇÕES" icon=" fa fa-exchange"  >
+                                <p:menuitem value="Afastamentos " icon="icon-user"   url="/View/afastamento/lista-afastamento/" />
+                                <p:menuitem value="Banco Horas " icon="icon-user" url="/View/bancoHoras/gerencia-banco/lista-banco/index.xhtml"    />
+                                <p:menuitem value="Banco Horas Extrato " icon="icon-user" url="/View/bancoHoras/extrato-banco/index.xhtml"    />
+                                <p:menuitem value="Espelho Ponto " icon="icon-user"  url="/View/espelhoPonto/espelhoPonto.xhtml"  />
+                            </p:submenu>
+                            <p:submenu label="RELATÓRIOS" icon="fa fa-bar-chart-o">
+                                <p:menuitem value="Relatório Funcionários" icon="icon-users"  />
+                                <p:menuitem value="Relatório Banco de Horas" icon="icon-user" />
+                            </p:submenu>
+                            <p:submenu label="FOLHA" icon="fa fa-copy" >
+                                <p:menuitem value="Layout de Exportação" icon="icon-users"  />
+                                <p:menuitem value="Exportação para Folha" icon="icon-user" />
+                                <p:menuitem value="Folha Periodo" icon="icon-user" url="/View/folha/lista-periodo/"/>
+                            </p:submenu>
+                            <p:submenu label="SEGURANÇA" icon="fa fa-lock"  >
+                                <p:menuitem value="Usuarios" icon="icon-users" url="/View/usuario/lista-usuario/" />
+                                <p:menuitem value="Usuario Perfil" icon="icon-users" url="/View/usuarioperfil/lista-usuarioperfil/" />
+                            </p:submenu>
+
+                        </pv:menu>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ui:composition>

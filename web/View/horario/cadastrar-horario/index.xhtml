@@ -1,0 +1,110 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"    
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <h:form>
+            <p:growl autoUpdate="true"  />
+
+            <p:tabView>
+                <p:tab title="Horários">
+                    <br></br>
+                    <p:panelGrid>
+                        <p:outputLabel for="id" value="ID: " >
+                            <p:inputText  id="id" value="#{horarioBean.horario.id}" style="width: 30px"  />
+                        </p:outputLabel>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Descrição: " >
+                            <p:inputText value="#{horarioBean.horario.nome}" required="true" requiredMessage="Descrição Horário" style="width: 300px"/>
+                        </p:outputLabel>
+
+                    </p:panelGrid>
+                    <br></br><br></br>
+                    <p:panelGrid columns="5" >
+
+                        <p:outputLabel value="Dias Uteis" />
+                        <p:outputLabel value="Entrada T1">
+                            <br />
+                            <p:calendar value="#{horarioBean.horario.hora_EntradaT1_util}" pattern="HH:mm" locale="pt" maxHour="23" timeOnly="true" mask="99:99"   maxMinute="59" navigator="false"
+                                        showButtonPanel="false" />
+                        </p:outputLabel>
+                        <p:outputLabel value="Saída T1">
+                            <br />
+                            <p:calendar value="#{horarioBean.horario.hora_saidaT1_util}" pattern="HH:mm" locale="pt" maxHour="23" timeOnly="true" mask="99:99" maxMinute="59" navigator="false"
+                                        showButtonPanel="false" />
+                        </p:outputLabel>
+                        <p:outputLabel value="Entrada T2">
+                            <br />
+                            <p:calendar value="#{horarioBean.horario.hora_EntradaT2_util}" pattern="HH:mm" locale="pt" maxHour="23" timeOnly="true" mask="99:99" maxMinute="59" navigator="false"
+                                        showButtonPanel="false" />
+                        </p:outputLabel>
+                        <p:outputLabel value="Saída T2">
+                            <br />
+                            <p:calendar value="#{horarioBean.horario.hora_saidaT2_util}" pattern="HH:mm" locale="pt" maxHour="23" timeOnly="true" mask="99:99" maxMinute="59" navigator="false"
+                                        showButtonPanel="false" />
+                        </p:outputLabel>
+                        
+                        
+                         <p:outputLabel value="Final de Semana" />
+                        <p:outputLabel value="Entrada T1">
+                            <br />
+                            <p:calendar value="#{horarioBean.horario.hora_EntradaT1_final}" pattern="HH:mm" locale="pt" maxHour="23" timeOnly="true" mask="99:99"   maxMinute="59" navigator="false"
+                                        showButtonPanel="false" />
+                        </p:outputLabel>
+                        <p:outputLabel value="Saída T1">
+                            <br />
+                            <p:calendar value="#{horarioBean.horario.hora_saidaT1_final}" pattern="HH:mm" locale="pt" maxHour="23" timeOnly="true" mask="99:99" maxMinute="59" navigator="false"
+                                        showButtonPanel="false" />
+                        </p:outputLabel>
+                        <p:outputLabel value="Entrada T2">
+                            <br />
+                            <p:calendar value="#{horarioBean.horario.hora_EntradaT2_final}" pattern="HH:mm" locale="pt" maxHour="23" timeOnly="true" mask="99:99" maxMinute="59" navigator="false"
+                                        showButtonPanel="false" />
+                        </p:outputLabel>
+                        <p:outputLabel value="Saída T2">
+                            <br />
+                            <p:calendar value="#{horarioBean.horario.hora_saidaT2_final}" pattern="HH:mm" locale="pt" maxHour="23" timeOnly="true" mask="99:99" maxMinute="59" navigator="false"
+                                        showButtonPanel="false" />
+                        </p:outputLabel>
+
+
+
+
+                    </p:panelGrid>
+                    <br></br><br></br>
+
+                    <h:panelGrid  style="text-align:left">
+                        <p:commandButton   value="Salvar" style="height: 40px; width: 1300px;align-content: center;" icon="fa fa-fw fa-save" action="#{horarioBean.gravarHorario()}"  ajax="false"/>
+                    </h:panelGrid>
+                </p:tab>
+
+                <p:tab title="Politicas">
+                    <!--<div class="ui-g-12">-->
+                    <div class="card card-w-title">
+                        <p:panelGrid id="basic" columns="5"   >
+
+                            <p:outputLabel value="Tolerância Geral" />
+                            <p:outputLabel value="">
+                                <br />
+                                <p:inputText value="#{horarioBean.horario.toleranciaGeral}" maxlength="4"  />
+                            </p:outputLabel>
+                        </p:panelGrid>
+                    </div>
+                    <!--</div>-->
+
+                </p:tab>
+
+            </p:tabView>
+
+
+            <br></br>
+
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

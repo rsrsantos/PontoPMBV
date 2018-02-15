@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="frequenciaPessoa" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0c0ad28f-88ed-4fa2-9506-6792fc673d0b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="3e517d06-1e02-4351-9a12-dbd49d6d1b04"/>
+	<parameter name="gIdDepartamento" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\postgres\\Desktop\\PONTO\\Relatorio\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="gPeriodoId" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportPath" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+
+        f.nome AS nome_funcionario,
+        f.pis AS pis_funcionario,
+        f.matricula AS matricula_funcionario,
+        fc.descricao AS funcao_funcionario,
+        dp.descricao AS departamento_funcionario,
+        fp.periodo AS periodo,
+        f.id AS id_funcionario,
+        pt.totalfaltas AS total_faltas,
+        pt.totalbancohoras AS saldo_total
+
+  FROM espelhoponto pt
+
+
+inner join funcionario f on pt.funcionario_id = f.id
+inner join departamento dp on f.departamento_id = dp.id
+inner join funcao fc on f.funcao_id = fc.id
+inner join folhaperiodo fp on pt.folhaperiodo_id = fp.id
+
+
+WHERE pt.departamento_id = $P{gIdDepartamento} AND pt.folhaperiodo_id = $P{gPeriodoId}
+GROUP BY f.id, f.nome, f.pis, f.matricula, fc.descricao, pt.funcionario_id, dp.descricao, fp.periodo, pt.totalfaltas,pt.totalbancohoras
+ORDER BY f.id]]>
+	</queryString>
+	<field name="nome_funcionario" class="java.lang.String"/>
+	<field name="pis_funcionario" class="java.lang.String"/>
+	<field name="matricula_funcionario" class="java.lang.Long"/>
+	<field name="funcao_funcionario" class="java.lang.String"/>
+	<field name="departamento_funcionario" class="java.lang.String"/>
+	<field name="periodo" class="java.lang.String"/>
+	<field name="id_funcionario" class="java.lang.Long"/>
+	<field name="total_faltas" class="java.lang.String"/>
+	<field name="saldo_total" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="137" splitType="Stretch">
+			<staticText>
+				<reportElement x="230" y="48" width="100" height="20" uuid="cff6412e-e802-4d48-83d7-72f4a7b7bc6a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FREQUÊNCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="9" width="244" height="16" uuid="53bd313b-e6e4-4b81-8d99-c3a75ea3b697"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PREFEITURA MUNICIPAL DE BOA VISTA]]></text>
+			</staticText>
+			<image>
+				<reportElement x="29" y="2" width="86" height="66" uuid="178d51a0-e41d-458a-afa4-57ab07ec0ac1"/>
+				<imageExpression><![CDATA[$P{reportPath} + "/logo_pmbv.png"]]></imageExpression>
+			</image>
+			<elementGroup>
+				<rectangle>
+					<reportElement x="1" y="75" width="554" height="60" backcolor="#F0F0F0" uuid="e27b8a5a-9ab7-43f8-be35-dc39d1cb2fa2"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="12" y="85" width="74" height="13" uuid="dec39b3e-de91-4532-b2d5-ffcb38817960"/>
+					<textElement verticalAlignment="Top"/>
+					<text><![CDATA[Servidor:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="315" y="111" width="51" height="13" uuid="50524e33-505c-46f9-b1d2-61101e01789e"/>
+					<textElement verticalAlignment="Top"/>
+					<text><![CDATA[Matricula:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="90" y="98" width="186" height="15" uuid="e4544fc1-b604-420f-b9e0-ca2512f8bf39"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{departamento_funcionario}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="12" y="117" width="74" height="13" uuid="6b8bebde-e74e-4a0b-ac62-9b906681c1e3"/>
+					<textElement verticalAlignment="Top"/>
+					<text><![CDATA[Função:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="366" y="83" width="100" height="15" uuid="0a065c0e-d3f8-4ca1-90e7-bd3b7b016a19"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{pis_funcionario}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="90" y="85" width="186" height="13" uuid="8ac27e5d-2e53-4d80-8d4e-4c2c56276ed1"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{nome_funcionario}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="366" y="98" width="100" height="13" uuid="926e9095-3331-422b-a0df-6a9cc7cef741"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{periodo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="90" y="113" width="186" height="17" uuid="dd152faa-ff93-4a1a-8508-2dce21a8f5a4"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{funcao_funcionario}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="12" y="100" width="74" height="13" uuid="ef3833e2-6f46-458c-b1df-c2fc493364e3"/>
+					<textElement verticalAlignment="Top"/>
+					<text><![CDATA[Departamento:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="315" y="85" width="51" height="13" uuid="9cb7c53d-4d72-4fdc-aab7-ee17fbcb2d71"/>
+					<textElement verticalAlignment="Bottom"/>
+					<text><![CDATA[PIS:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="366" y="111" width="100" height="13" uuid="08803d6d-a72d-469a-af91-38579f75ba79"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{matricula_funcionario}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="315" y="98" width="51" height="13" uuid="4b6b270b-71cf-49ba-a89d-b91d825bffbc"/>
+					<textElement verticalAlignment="Bottom"/>
+					<text><![CDATA[Periodo:]]></text>
+				</staticText>
+			</elementGroup>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="360" y="57" width="194" height="17" uuid="28299d5a-243f-47ef-8a8f-df483209ae3d"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="40">
+			<elementGroup>
+				<rectangle>
+					<reportElement x="1" y="2" width="554" height="20" backcolor="#F0F0F0" uuid="bda3a0a7-1fa8-405c-8aec-8ff43c5e0c93"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="258" y="2" width="39" height="20" uuid="9c8d2fa6-5472-47d5-b75f-1ae9f5ab5b3a"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Faltas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="2" width="74" height="20" uuid="626d800d-7afa-4a01-b581-c47ed517525d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Data]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="301" y="2" width="48" height="18" uuid="94e8a2d9-b0dc-445a-8d12-179016dafbd5"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Normais]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="204" y="3" width="41" height="20" uuid="e4c93e13-874f-4f63-95ac-b6241afd4770"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Sai.02]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="164" y="3" width="40" height="20" uuid="8e72c190-e01b-40e5-ac5f-47c3c4775113"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<text><![CDATA[Ent.02]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="88" y="3" width="37" height="20" uuid="777ff3d0-32c2-4d9f-9279-de966927ae97"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<text><![CDATA[Ent.01]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="125" y="3" width="39" height="20" uuid="f9689511-78fd-41bc-b8a6-ee13014d4d07"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<text><![CDATA[Sai.01]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="1" y="20" width="554" height="20" backcolor="#F0F0F0" uuid="12009d6c-2624-43a2-a884-872b7da09a60"/>
+				</rectangle>
+			</elementGroup>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="39" splitType="Stretch">
+			<subreport>
+				<reportElement x="-16" y="0" width="570" height="39" uuid="1419bcc2-d2cd-4635-9a56-caf04dfb4158"/>
+				<subreportParameter name="gFuncionarioId">
+					<subreportParameterExpression><![CDATA[$F{id_funcionario}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="gIdPeriodo">
+					<subreportParameterExpression><![CDATA[$P{gPeriodoId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "frequenciaDetalhe.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<frame>
+				<reportElement x="1" y="0" width="555" height="15" uuid="9da7ebcb-26e9-44a6-bd58-e6ae6c0818d6"/>
+				<staticText>
+					<reportElement x="1" y="2" width="192" height="13" uuid="8f826dad-4d54-4afe-9357-4ae32b7ccc86"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nome chefia imediata]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="362" y="0" width="192" height="13" uuid="1da4a356-4f9d-4bbd-9ad9-8e668a0aa3c4"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Servidor]]></text>
+				</staticText>
+				<line>
+					<reportElement x="1" y="2" width="193" height="1" uuid="b2909829-4ef8-4400-8985-2aebd4ef703b"/>
+					<graphicElement>
+						<pen lineWidth="1.0"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="361" y="0" width="193" height="1" uuid="c6e85f77-a0bc-4f25-9117-ce2a4cd6abe1"/>
+					<graphicElement>
+						<pen lineWidth="1.0"/>
+					</graphicElement>
+				</line>
+			</frame>
+			<textField>
+				<reportElement x="371" y="13" width="183" height="13" uuid="dccf8801-fc8c-44a1-89ca-1cebd8956e6e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nome_funcionario}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <p:growl autoUpdate="true" />
+        <title>Cadastrar Usuario</title>  
+
+        <h:form >
+     
+            <p:tabView>
+                <p:tab title="Usuário" >
+                    <p:commandButton value="Novo" icon="fa fa-user-plus" action="#{usuarioBean.novoUsuario()}"  ajax="false"  />
+                    <br></br><br></br>
+
+                    <h:panelGrid columns="4"  styleClass="right">
+                        <div class="ui-g-12">
+                            <div class="card card-w-title">
+                                <p:dataTable id="tbl" var="usuario"  value="#{usuarioBean.listaUsuarioPerfil}" emptyMessage="Nenhum registro encontrado" reflow="true"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
+                                             "
+                                             currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
+                                             - Página: {currentPage}/{totalPages} ]"
+                                             paginator="true" rows="10" style="margin-bottom:20px">
+
+                                    <f:facet name="header">
+                                        USUÁRIOS CADASTRADOS
+                                    </f:facet>
+                                    <p:column headerText="Nome" filterBy="#{usuario.funcionario.nome}" sortBy="#{usuario.funcionario.nome}" filterMatchMode="contains">
+                                        <h:outputText  value="#{usuario.funcionario.nome}"/>
+
+                                    </p:column>
+                                    <p:column headerText="E-mail" filterBy="#{usuario.email}" sortBy="#{usuario.email}" filterMatchMode="contains">
+                                        <h:outputText  value="#{usuario.email}"/>
+
+                                    </p:column>
+                                    <p:column headerText="Login" filterBy="#{usuario.login}" sortBy="#{usuario.login}" filterMatchMode="contains" >
+                                        <h:outputText id="login" value="#{usuario.login}" />
+                                    </p:column>
+
+                                    <p:column headerText="Última Alteração" >
+                                        <h:outputText value="#{usuario.ultima_alteracao}"   />
+                                    </p:column>
+
+                                    <p:column headerText="Usuario" >
+                                        <h:outputText value="#{usuario.usuario.funcionario.nome}"   />
+                                    </p:column>
+
+                                    <p:column headerText="Ação"  style="width:150px ">
+                                        <p:commandButton ajax="false" icon="fa fw fa-trash-o" action="#{usuarioBean.excluir(usuario)}" >
+                                        </p:commandButton>
+
+                                        <p:commandButton  ajax="false" icon="fa fw fa-edit" action="#{usuarioBean.editar(usuario)}"/>
+
+
+                                    </p:column>
+
+
+                                </p:dataTable>
+                            </div>
+                        </div>
+
+                    </h:panelGrid>   
+
+                    <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+                    <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                        <p:graphicImage name="images/preloader.gif" library="verona-layout" />
+                    </p:dialog>
+
+
+
+                </p:tab>
+
+
+            </p:tabView>	
+        </h:form>
+    </ui:define>
+</ui:composition>
+

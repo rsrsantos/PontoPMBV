@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta charset="UTF-8"/>
+        <title>Sistema de Ponto PMBV - Login</title>
+
+        <link rel="stylesheet" href="#{request.contextPath}/css/style.css"/>
+
+    </h:head>
+
+    <h:body styleClass="login-body">
+
+        <div class="logmod">
+            <div class="logmod__wrapper">
+                <div class="logmod__container">
+                    <ul class="logmod__tabs">
+                        <li data-tabtar="lgm-2"><a href="#">Login</a></li>
+                        <li data-tabtar="lgm-1"><a href="#">Esqueceu sua senha?</a></li>
+                    </ul>
+                    <p:graphicImage name="images/logo.png"  library="verona-layout" />
+                    <a>Sistema de Ponto - PMBV</a>
+                    <div class="logmod__tab-wrapper">
+                        <div class="logmod__tab lgm-2">
+                            <div class="logmod__heading">
+                            </div> 
+                            <div class="logmod__form">
+                                <h:form>
+                                    <p:growl id="growl"   />
+                                    <div class="sminputs">
+                                        <div class="input full">
+                                            <p:outputLabel class="string optional" value="Login" />
+                                            <p:inputText  required="true" requiredMessage="Login" placeholder="Usuario" id="login" class="form-control"   
+                                                          value="#{loginBean.login}" />
+                                        </div>
+                                    </div>
+                                    <div class="sminputs">
+                                        <div class="input full">
+                                            <p:outputLabel value="Senha" />
+                                            <p:password value="#{loginBean.senha}"
+                                                        required="true" requiredMessage="Senha"  placeholder="senha" />
+                                            <span class="hide-password">Exibir</span>
+                                        </div>
+                                    </div>
+                                    <div class="simform__actions">
+                                        <p:commandButton action="#{loginBean.efetuaLogin()}" ajax="false"  class="sumbit"  value="Entrar" />
+                                    </div> 
+                                </h:form>
+                            </div> 
+                        </div>
+
+                        <div class="logmod__tab lgm-1">
+                            <div class="logmod__heading">
+                                <span class="logmod__heading-subtitle">Informe seus dados para recuperar sua senha </span>
+                            </div> 
+                            <div class="logmod__form">
+                                <h:form id="formRecuperasenha">
+                                    <p:growl id="growl"   />
+                                    <div class="sminputs">
+                                        <div class="input full">
+                                            <p:outputLabel class="string optional" value="Login" />
+                                            <p:inputText  required="true" requiredMessage="Login" placeholder="Usuario" id="login" class="form-control"   
+                                                          value="#{loginBean.usuariologin}" />
+                                        </div>
+                                    </div>
+                                    <div class="sminputs">
+                                        <div class="input full">
+                                            <p:outputLabel class="string optional" value="Matricula" />
+                                            <p:inputText  required="true" requiredMessage="matricula" placeholder="matricula" id="login1" class="form-control"   
+                                                          value="#{loginBean.matricula}" />
+                                        </div>
+                                    </div>
+                                    <div class="sminputs">
+                                        <div class="input full">
+                                            <p:outputLabel class="string optional" value="Email" />
+                                            <p:inputText  required="true" requiredMessage="email" placeholder="email@email" id="login2" class="form-control"   
+                                                          value="#{loginBean.email}" />
+                                        </div>
+                                    </div>
+                                    <div class="simform__actions">
+                                        <p:commandButton action="#{loginBean.recuperarSenha()}"  update="formRecuperasenha,growl" class="sumbit"  value="Enviar" >
+
+                                        </p:commandButton>
+                                    </div> 
+
+
+                                    <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+                                    <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                                        <p:graphicImage library="verona-layout" name="/images/Wedges.gif" />
+                                    </p:dialog>
+
+                                </h:form>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script  src="#{request.contextPath}/js/index.js"></script>
+    </h:body>
+
+</html>
